@@ -292,7 +292,7 @@ public class AddItemBookTest {
 				"fantasy", "Lewis Carroll", 44, "4.5", "addItemBook() doesn't reject a already existing book title");
 
 		nbTests++;
-		nbErrors += addItemItemBookAleadyExistsException(sn, "esevellec", "1234", "Lord Of The Rings", "heroic fantasy",
+		nbErrors += addItemItemBookAleadyExistsException(sn, "esevellec", "1234", "LORd Of THe rinGs", "heroic fantasy",
 				"J. R. R. Tolkien", 30, "4.6",
 				"addItemBook() doesn't reject a already existing book title with a different case");
 
