@@ -68,7 +68,7 @@ public class AddItemBookTest {
 	 *            - the <i>ISocialNetwork</i>
 	 * @param login
 	 *            - member login
-	 * @param pwd
+	 * @param password
 	 *            - member password
 	 * @param title
 	 *            - new item book's title
@@ -222,7 +222,7 @@ public class AddItemBookTest {
 
 		System.out.print("Testing AddItemBook()");
 
-		// Test n°3
+		// Test nï¿½3
 		nbTests++;
 		nbErrors += addItemBookBadEntryTest(sn, null, "1234", "Lord Of The Rings", "heroic fantasy", "J. R. R. Tolkien",
 				30, "3.1", "addItemBook() doesn't reject null login");
@@ -265,7 +265,7 @@ public class AddItemBookTest {
 		nbErrors += addItemBookBadEntryTest(sn, "esevellec", "1234", "Lord Of The Rings", "heroic fantasy",
 				"J. R. R. Tolkien", -5, "3.10", "addItemBook() doesn't reject negative number of pages");
 
-		// Test n°4
+		// Test nï¿½4
 
 		nbTests++;
 		nbErrors += addItemBookNotMemberExceptionTest(sn, "Erwan", "1234", "Lord Of The Rings", "heroic fantasy",
@@ -280,7 +280,7 @@ public class AddItemBookTest {
 				"J. R. R. Tolkien", 30, "4.3");
 
 		nbTests++;
-		nbErrors += addItemBookOKTest(sn, "esevellec", "1234", "Alice’s Adventures in Wonderland", "fantasy",
+		nbErrors += addItemBookOKTest(sn, "esevellec", "1234", "Aliceï¿½s Adventures in Wonderland", "fantasy",
 				"Lewis Carroll", 44, "4.3");
 
 		nbTests++;
@@ -288,7 +288,7 @@ public class AddItemBookTest {
 				"J. R. R. Tolkien", 30, "4.4", "addItemBook() doesn't reject a already existing book title");
 
 		nbTests++;
-		nbErrors += addItemItemBookAleadyExistsException(sn, "esevellec", "1234", "Alice’s Adventures in Wonderland",
+		nbErrors += addItemItemBookAleadyExistsException(sn, "esevellec", "1234", "Aliceï¿½s Adventures in Wonderland",
 				"fantasy", "Lewis Carroll", 44, "4.5", "addItemBook() doesn't reject a already existing book title");
 
 		nbTests++;
