@@ -20,7 +20,25 @@ public class SocialNetwork implements ISocialNetwork {
 	private int nbFilms = 0;
 	private int nbBooks = 0;
 
-	/**
+	
+	private void isItemExist(String title, String itemType) throws ItemBookAlreadyExistsException {
+		for(Iterator<Item> it = items.iterator(); it.hasNext();){
+			Item item = (Item)it.next();
+			if (title.equals(item.getTitle())) {
+				if (itemType.equals("book")) {
+					if (item instanceof Book) {
+						throw new ItemBookAlreadyExistsException();
+					}
+				} else {
+					if (item instanceof Film) {
+						throw new ItemBookAlreadyExistsException();
+					}
+				}
+			}
+		}
+	}
+	
+	/**isMemberCorrect(login, password);ItemBookAlreadyExistsException
 	 * Test if a member with the same login exist in the <i>SocialNetwork</i>
 	 * 
 	 * @param login
@@ -74,15 +92,29 @@ public class SocialNetwork implements ISocialNetwork {
 	@Override
 	public void addItemFilm(String login, String password, String title, String kind, String director, String scenarist,
 			int duration) throws BadEntryException, NotMemberException, ItemFilmAlreadyExistsException {
-		// TODO Auto-generated method stub
-
+	// TODO Auto-generated method stub
 	}
-
+	
 	@Override
 	public void addItemBook(String login, String password, String title, String kind, String author, int nbPages)
 			throws BadEntryException, NotMemberException, ItemBookAlreadyExistsException {
-		// TODO Auto-generated method stub
-
+		if (login == null || login.trim().length() == 0) {
+			throw new BadEntryException("Login must be instantiate and contains at least one non-space character");
+		} else if (password == null || password.trim().length() < 4) {
+			throw new BadEntryException(
+					"Password must be instantiate and contains at least 3 characters (not taking into account leading or trailing blanks)");
+		} else if (title == null) {
+			throw new BadEntryException("Title must be instantiate");
+		} else if (kind == null) {
+			throw new BadEntryException("Kind of book must be instantiate");
+		} else if (author == null) {
+			throw new BadEntryException("Author must be instantiate");
+		} else if (nbPage <= 0) {
+			throw new BadEntryException("Number of page must be instantiate");
+		}
+		isMemberCorrect(login, password);
+		isItemExist(title, "book");
+		items.add(new Book(login, password, title, kind, author, nbPages));
 	}
 
 	@Override
