@@ -46,7 +46,7 @@ public class ReviewItemBook {
 			sn.reviewItemBook(login, password, title, mark, comment);
 			System.out.println("Err" + testId + " : " + errorMessage);
 			return 1;
-		} catch (NotMemberException e) {
+		} catch (NotItemException e) {
 			return 0;
 		} catch (Exception e) {
 			System.out.println("Err " + testId + " : unexpected exception. " + e);
@@ -87,7 +87,7 @@ public class ReviewItemBook {
 		}
 
 		try {
-			sn.addItemBook("esevellec", "1234", "Alice’s Adventures in Wonderland", "fantasy", "Lewis Carroll", 44);
+			sn.addItemBook("esevellec", "1234", "Alice's Adventures in Wonderland", "fantasy", "Lewis Carroll", 44);
 		} catch (Exception e) {
 			System.out.println("addItemBook() throw an exception");
 			e.printStackTrace();
@@ -102,20 +102,20 @@ public class ReviewItemBook {
 		// test 5
 
 		nbTests++;
-		nbErrors += reviewItemBookBadEntryTest(sn, null, "1234", "Alice’s Adventures in Wonderland", 3, "Great book!",
+		nbErrors += reviewItemBookBadEntryTest(sn, null, "1234", "Alice's Adventures in Wonderland", 3, "Great book!",
 				"5.1", "reviewItemBook() doesn't reject null login");
 
 		nbTests++;
-		nbErrors += reviewItemBookBadEntryTest(sn, " ", "1234", "Alice’s Adventures in Wonderland", 3, "Great book!",
+		nbErrors += reviewItemBookBadEntryTest(sn, " ", "1234", "Alice's Adventures in Wonderland", 3, "Great book!",
 				"5.2",
 				"reviewItemBook() doesn't reject logins that don't contain at least one character other than space");
 
 		nbTests++;
-		nbErrors += reviewItemBookBadEntryTest(sn, "esevellec", null, "Alice’s Adventures in Wonderland", 3,
+		nbErrors += reviewItemBookBadEntryTest(sn, "esevellec", null, "Alice's Adventures in Wonderland", 3,
 				"Great book!", "5.3", "reviewItemBook() doesn't reject null password");
 
 		nbTests++;
-		nbErrors += reviewItemBookBadEntryTest(sn, "esevellec", "  123 ", "Alice’s Adventures in Wonderland", 3,
+		nbErrors += reviewItemBookBadEntryTest(sn, "esevellec", "  123 ", "Alice's Adventures in Wonderland", 3,
 				"Great book!", "5.4",
 				"reviewItemBook() doesn't reject that don't contain at least 4 characters (not taking into account leading or trailing blanks)");
 
@@ -128,25 +128,25 @@ public class ReviewItemBook {
 				"reviewItemBook() doesn't reject only space title");
 
 		nbTests++;
-		nbErrors += reviewItemBookBadEntryTest(sn, "esevellec", "1234", "Alice’s Adventures in Wonderland", -1,
+		nbErrors += reviewItemBookBadEntryTest(sn, "esevellec", "1234", "Alice's Adventures in Wonderland", -1,
 				"Great book!", "5.7", "reviewItemBook() doesn't reject a negative mark");
 
 		nbTests++;
-		nbErrors += reviewItemBookBadEntryTest(sn, "esevellec", "1234", "Alice’s Adventures in Wonderland", 6,
+		nbErrors += reviewItemBookBadEntryTest(sn, "esevellec", "1234", "Alice's Adventures in Wonderland", 6,
 				"Great book!", "5.8", "reviewItemBook() doesn't reject a mark greater than 5");
 
 		nbTests++;
-		nbErrors += reviewItemBookBadEntryTest(sn, "esevellec", "1234", "Alice’s Adventures in Wonderland", 3, null,
+		nbErrors += reviewItemBookBadEntryTest(sn, "esevellec", "1234", "Alice's Adventures in Wonderland", 3, null,
 				"5.9", "reviewItemBook() doesn't reject null comments");
 
-		// Test n°6
+		// Test nï¿½6
 
 		nbTests++;
-		nbErrors += reviewItemBookNotMemberExceptionTest(sn, "Erwan", "1234", "Alice’s Adventures in Wonderland", 3,
+		nbErrors += reviewItemBookNotMemberExceptionTest(sn, "Erwan", "1234", "Alice's Adventures in Wonderland", 3,
 				"Great Book!", "6.1", "reviewItemBook() doesn't reject a bad login");
 
 		nbTests++;
-		nbErrors += reviewItemBookNotMemberExceptionTest(sn, "esevellec", "12345", "Alice’s Adventures in Wonderland",
+		nbErrors += reviewItemBookNotMemberExceptionTest(sn, "esevellec", "12345", "Alice's Adventures in Wonderland",
 				3, "Great Book!", "6.2", "reviewItemBook() doesn't reject a bad password");
 
 		nbTests++;
@@ -154,11 +154,11 @@ public class ReviewItemBook {
 				"6.3", "reviewItemBook() doesn't reject a non existing book title");
 
 		nbTests++;
-		nbErrors += reviewItemBookOKTest(sn, "esevellec", "1234", "Alice’s Adventures in Wonderland", 0, "Great Book!",
+		nbErrors += reviewItemBookOKTest(sn, "esevellec", "1234", "Alice's Adventures in Wonderland", 0, "Great Book!",
 				0, "6.4");
 
 		nbTests++;
-		nbErrors += reviewItemBookOKTest(sn, "kthezelais", "1234", "Alice’s Adventures in Wonderland", 5, "Great Book!",
+		nbErrors += reviewItemBookOKTest(sn, "kthezelais", "1234", "Alice's Adventures in Wonderland", 5, "Great Book!",
 				(float) 2.5, "6.5");
 
 		nbTests++;

@@ -1,3 +1,5 @@
+package opinion;
+
 public class Review {
 
 	private float mark;
@@ -5,15 +7,15 @@ public class Review {
 	private Member member;
 	private Item item;
 
-	public Review(float mark, String comment, Membre membre, Item item) {
+	public Review(float mark, String comment, Member member, Item item) {
 		this.mark = mark;
 		this.comment = comment;
-		this.membre = membre;
+		this.member = member;
 		this.item = item;
 	}
 
 	public String toString() {
 		return "mark : " + mark + "; comment : " + comment + "; membre : "
-				+ membre + "; item : " + item;
+				+ member + "; item : " + item;
 	}
 }

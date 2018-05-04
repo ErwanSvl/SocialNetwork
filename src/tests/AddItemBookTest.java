@@ -280,7 +280,7 @@ public class AddItemBookTest {
 				"J. R. R. Tolkien", 30, "4.3");
 
 		nbTests++;
-		nbErrors += addItemBookOKTest(sn, "esevellec", "1234", "Alice�s Adventures in Wonderland", "fantasy",
+		nbErrors += addItemBookOKTest(sn, "esevellec", "1234", "Alice's Adventures in Wonderland", "fantasy",
 				"Lewis Carroll", 44, "4.3");
 
 		nbTests++;
@@ -288,7 +288,7 @@ public class AddItemBookTest {
 				"J. R. R. Tolkien", 30, "4.4", "addItemBook() doesn't reject a already existing book title");
 
 		nbTests++;
-		nbErrors += addItemItemBookAleadyExistsException(sn, "esevellec", "1234", "Alice�s Adventures in Wonderland",
+		nbErrors += addItemItemBookAleadyExistsException(sn, "esevellec", "1234", "Alice's Adventures in Wonderland",
 				"fantasy", "Lewis Carroll", 44, "4.5", "addItemBook() doesn't reject a already existing book title");
 
 		nbTests++;

@@ -1,5 +1,7 @@
 package opinion;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import exceptions.BadEntryException;
@@ -12,29 +14,61 @@ import opinion.ISocialNetwork;
 
 public class SocialNetwork implements ISocialNetwork {
 
+	private ArrayList<Member> members = new ArrayList<Member>();
+	private ArrayList<Item> items = new ArrayList<Item>();
+
+	private int nbFilms = 0;
+	private int nbBooks = 0;
+
+	/**
+	 * Test if a member with the same login exist in the <i>SocialNetwork</i>
+	 * 
+	 * @param login
+	 *            login that must be verified
+	 * @return true if the member already exist.
+	 */
+	private boolean isMemberExist(String login) {
+		Iterator<Member> it = members.iterator();
+		while (it.hasNext()) {
+			if (it.next().isEquals(login))
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * return the number of member in the <i>SocialNetwork</i>
+	 */
 	@Override
 	public int nbMembers() {
-		// TODO Auto-generated method stub
-		return 0;
+		return members.size();
 	}
 
 	@Override
 	public int nbFilms() {
-		// TODO Auto-generated method stub
-		return 0;
+		return nbFilms;
 	}
 
 	@Override
 	public int nbBooks() {
-		// TODO Auto-generated method stub
-		return 0;
+		return nbBooks;
 	}
 
 	@Override
 	public void addMember(String login, String password, String profile)
 			throws BadEntryException, MemberAlreadyExistsException {
-		// TODO Auto-generated method stub
-
+		if (login == null || login.trim().length() == 0) {
+			throw new BadEntryException("Login must be instantiate and contains at least one non-space character");
+		} else if (password == null || password.trim().length() < 4) {
+			throw new BadEntryException(
+					"Password must be instantiate and contains at least 3 characters (not taking into account leading or trailing blanks)");
+		} else if (profile == null) {
+			throw new BadEntryException("Profile must be instantiate");
+		}
+		if (isMemberExist(login)) {
+			throw new MemberAlreadyExistsException();
+		}
+		members.add(new Member(login, password, profile));
 	}
 
 	@Override
@@ -69,6 +103,16 @@ public class SocialNetwork implements ISocialNetwork {
 	public LinkedList<String> consultItems(String title) throws BadEntryException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public String toString() {
+		String socialNetwork = new String();
+		socialNetwork = "Liste des membres :\n";
+		for (Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
+			socialNetwork += iterator.next() + "\n";
+		}
+		return socialNetwork;
 	}
 
 }
