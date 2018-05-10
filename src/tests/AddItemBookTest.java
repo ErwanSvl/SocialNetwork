@@ -46,11 +46,12 @@ public class AddItemBookTest {
 			System.out.println("Err " + testId + " : " + errorMessage);
 			return 1;
 		} catch (BadEntryException e) {
-			if (sn.nbMembers() != nbItemBooks) {
+			if (sn.nbBooks() != nbItemBooks) {
 				System.out.println("Err " + testId + " : BadEntry was thrown but the number of item books was changed");
 				return 1;
-			} else
+			} else {
 				return 0;
+			}
 		} catch (Exception e) {
 			System.out.println("Err " + testId + " : unexpected exception. " + e);
 			e.printStackTrace();
@@ -220,7 +221,7 @@ public class AddItemBookTest {
 		int nbTests = 0;
 		int nbErrors = 0;
 
-		System.out.print("Testing AddItemBook()");
+		System.out.println("Testing AddItemBook()");
 
 		// Test n�3
 		nbTests++;
@@ -265,7 +266,7 @@ public class AddItemBookTest {
 		nbErrors += addItemBookBadEntryTest(sn, "esevellec", "1234", "Lord Of The Rings", "heroic fantasy",
 				"J. R. R. Tolkien", -5, "3.10", "addItemBook() doesn't reject negative number of pages");
 
-		// Test n�4
+		// Test n°4
 
 		nbTests++;
 		nbErrors += addItemBookNotMemberExceptionTest(sn, "Erwan", "1234", "Lord Of The Rings", "heroic fantasy",
@@ -313,7 +314,7 @@ public class AddItemBookTest {
 		}
 
 		// Display final state of 'sn'
-		System.out.println("Final state of the social network : " + sn);
+		System.out.println("Final state of the social network : \n" + sn);
 
 		try {
 			TestReport tr = new TestReport(nbTests, nbErrors);

@@ -24,4 +24,8 @@ public abstract class Item {
 	public String toString() {
 		return this.title + " genre : " + this.kind;
 	}
+	
+	public String getTitle() {
+		return title;
+	}
 }
