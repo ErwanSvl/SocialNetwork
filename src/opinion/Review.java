@@ -13,6 +13,14 @@ public class Review {
 		this.member = member;
 		this.item = item;
 	}
+	
+	public Item getItem() {
+		return item;
+	}
+	
+	public float getMark() {
+		return mark;
+	}
 
 	public String toString() {
 		return "mark : " + mark + "; comment : " + comment + "; membre : "

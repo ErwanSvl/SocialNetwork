@@ -16,6 +16,11 @@ public class SocialNetwork implements ISocialNetwork {
 
 	private ArrayList<Member> members = new ArrayList<Member>();
 	private ArrayList<Item> items = new ArrayList<Item>();
+	private ArrayList<Review> reviews = new ArrayList<Review>();
+
+	private enum Itemtype {
+		BOOK, FILM
+	}
 
 	/**
 	 * 
@@ -28,8 +33,8 @@ public class SocialNetwork implements ISocialNetwork {
 	 * @param duration
 	 * @throws BadEntryException
 	 */
-	private void testFilmParameterCorrect(String title, String kind, String director,
-			String scenarist, int duration) throws BadEntryException {
+	private void testFilmParameterCorrect(String title, String kind, String director, String scenarist, int duration)
+			throws BadEntryException {
 		testItemParameterCorrect(title, kind);
 		if (scenarist == null) {
 			throw new BadEntryException("Author must be instantiate");
@@ -38,6 +43,31 @@ public class SocialNetwork implements ISocialNetwork {
 		} else if (duration <= 0) {
 			throw new BadEntryException("Duration must be instantiate");
 		}
+	}
+
+	/**
+	 * Test if a Item with the same type and the same title exist
+	 * 
+	 * @param title
+	 * @param itemtype
+	 * @throws NotItemException
+	 */
+	private Item testItemExist(String title, Itemtype itemtype) throws NotItemException {
+		for (Iterator<Item> iterator = items.iterator(); iterator.hasNext();) {
+			Item item = (Item) iterator.next();
+			if (item.getTitle().toLowerCase().equals(title.trim().toLowerCase())) {
+				if (itemtype == Itemtype.BOOK) {
+					if (item instanceof Book) {
+						return item;
+					}
+				} else if (itemtype == Itemtype.FILM) {
+					if (item instanceof Film) {
+						return item;
+					}
+				}
+			}
+		}
+		throw new NotItemException("There is no item with this title");
 	}
 
 	/**
@@ -86,7 +116,7 @@ public class SocialNetwork implements ISocialNetwork {
 	 *            login that must be verified
 	 * @return true if the member already exist.
 	 */
-	private boolean isMemberExist(String login) {
+	private boolean isMemberLoginExist(String login) {
 		for (Iterator<Member> it = members.iterator(); it.hasNext();) {
 			Member member = (Member) it.next();
 			if (member.isEquals(login)) {
@@ -105,7 +135,7 @@ public class SocialNetwork implements ISocialNetwork {
 	 *             throw an exception if the member doesn't exist or if the password
 	 *             isn't correct
 	 */
-	private void testMemberCorrect(String login, String password) throws BadEntryException, NotMemberException {
+	private Member testMemberCorrect(String login, String password) throws BadEntryException, NotMemberException {
 		if (login == null || login.trim().length() == 0) {
 			throw new BadEntryException("Login must be instantiate and contains at least one non-space character");
 		} else if (password == null || password.trim().length() < 4) {
@@ -120,7 +150,7 @@ public class SocialNetwork implements ISocialNetwork {
 					throw new NotMemberException("Password is not correct for this member");
 
 				else
-					return;
+					return member;
 			}
 		}
 		throw new NotMemberException("This member doesn't exist");
@@ -147,12 +177,12 @@ public class SocialNetwork implements ISocialNetwork {
 	}
 
 	/**
+	 * Test if parameters for an item are correct
 	 * 
-	 * @param login
-	 * @param password
 	 * @param title
 	 * @param kind
 	 * @throws BadEntryException
+	 *             throw an exception if at least one parameter is not correct
 	 */
 	private void testItemParameterCorrect(String title, String kind) throws BadEntryException {
 		if (title == null || title.trim().length() == 0) {
@@ -164,8 +194,6 @@ public class SocialNetwork implements ISocialNetwork {
 
 	/**
 	 * 
-	 * @param login
-	 * @param password
 	 * @param title
 	 * @param kind
 	 * @param author
@@ -180,6 +208,29 @@ public class SocialNetwork implements ISocialNetwork {
 		} else if (nbPages <= 0) {
 			throw new BadEntryException("Number of page must be instantiate");
 		}
+	}
+
+	private void testReviewParameter(String title, float mark, String comment) throws BadEntryException {
+		if (title == null || title.trim().length() == 0) {
+			throw new BadEntryException("Title must be instantiate and contains at least one non-space character");
+		} else if (mark < 0 || mark > 5) {
+			throw new BadEntryException("Mark must be between 0 and 5");
+		} else if (comment == null) {
+			throw new BadEntryException("Comment must be instantiate");
+		}
+	}
+
+	private float getMean(Item item) {
+		float sum = 0;
+		int nbReview = 0;
+		for (Iterator<Review> it = reviews.iterator(); it.hasNext();) {
+			Review review = (Review) it.next();
+			if (review.getItem().equals(item)) {
+				sum += review.getMark();
+				nbReview++;
+			}
+		}
+		return sum / nbReview;
 	}
 
 	/**
@@ -218,7 +269,7 @@ public class SocialNetwork implements ISocialNetwork {
 	public void addMember(String login, String password, String profile)
 			throws BadEntryException, MemberAlreadyExistsException {
 		testMemberParametersCorrect(login, password, profile);
-		if (isMemberExist(login)) {
+		if (isMemberLoginExist(login)) {
 			throw new MemberAlreadyExistsException();
 		}
 		members.add(new Member(login.trim(), password, profile.trim()));
@@ -252,8 +303,11 @@ public class SocialNetwork implements ISocialNetwork {
 	@Override
 	public float reviewItemBook(String login, String password, String title, float mark, String comment)
 			throws BadEntryException, NotMemberException, NotItemException {
-		// TODO Auto-generated method stub
-		return 0;
+		testReviewParameter(title, mark, comment);
+		Item item = testItemExist(title, Itemtype.BOOK);
+		Member member = testMemberCorrect(login, password);
+		reviews.add(new Review(mark, comment, member, item));
+		return getMean(item);
 	}
 
 	@Override
@@ -279,6 +333,17 @@ public class SocialNetwork implements ISocialNetwork {
 		} else {
 			socialNetwork += "Liste des items :\n";
 			for (Iterator<Item> it = items.iterator(); it.hasNext();) {
+				socialNetwork += " - " + it.next() + "\n";
+
+			}
+			socialNetwork += "\n";
+		}
+
+		if (reviews.size() == 0) {
+			socialNetwork += "Aucune évaluations dans le système\n";
+		} else {
+			socialNetwork += "Liste des évaluations :\n";
+			for (Iterator<Review> it = reviews.iterator(); it.hasNext();) {
 				socialNetwork += " - " + it.next() + "\n";
 
 			}
