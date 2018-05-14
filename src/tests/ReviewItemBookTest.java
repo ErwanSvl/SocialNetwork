@@ -8,7 +8,7 @@ import exceptions.NotMemberException;
 import exceptions.NotTestReportException;
 import exceptions.NotItemException;
 
-public class ReviewItemBook {
+public class ReviewItemBookTest {
 
 	private static int reviewItemBookBadEntryTest(ISocialNetwork sn, String login, String password, String title,
 			float mark, String comment, String testId, String errorMessage) {

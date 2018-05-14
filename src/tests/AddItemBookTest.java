@@ -138,7 +138,7 @@ public class AddItemBookTest {
 	 *            thrown when adding this member
 	 * @return 0 if the test is OK, 1 if not
 	 */
-	private static int addItemItemBookAleadyExistsException(ISocialNetwork sn, String login, String password,
+	private static int addItemBookAleadyExistsException(ISocialNetwork sn, String login, String password,
 			String title, String kind, String author, int nbPages, String testId, String errorMessage) {
 		int nbItemsBooks = sn.nbBooks();
 
@@ -285,20 +285,20 @@ public class AddItemBookTest {
 				"Lewis Carroll", 44, "4.3");
 
 		nbTests++;
-		nbErrors += addItemItemBookAleadyExistsException(sn, "esevellec", "1234", "Lord Of The Rings", "heroic fantasy",
+		nbErrors += addItemBookAleadyExistsException(sn, "esevellec", "1234", "Lord Of The Rings", "heroic fantasy",
 				"J. R. R. Tolkien", 30, "4.4", "addItemBook() doesn't reject a already existing book title");
 
 		nbTests++;
-		nbErrors += addItemItemBookAleadyExistsException(sn, "esevellec", "1234", "Alice's Adventures in Wonderland",
+		nbErrors += addItemBookAleadyExistsException(sn, "esevellec", "1234", "Alice's Adventures in Wonderland",
 				"fantasy", "Lewis Carroll", 44, "4.5", "addItemBook() doesn't reject a already existing book title");
 
 		nbTests++;
-		nbErrors += addItemItemBookAleadyExistsException(sn, "esevellec", "1234", "LORd Of THe rinGs", "heroic fantasy",
+		nbErrors += addItemBookAleadyExistsException(sn, "esevellec", "1234", "LORd Of THe rinGs", "heroic fantasy",
 				"J. R. R. Tolkien", 30, "4.6",
 				"addItemBook() doesn't reject a already existing book title with a different case");
 
 		nbTests++;
-		nbErrors += addItemItemBookAleadyExistsException(sn, "esevellec", "1234", "   Lord Of The Rings    ",
+		nbErrors += addItemBookAleadyExistsException(sn, "esevellec", "1234", "   Lord Of The Rings    ",
 				"heroic fantasy", "J. R. R. Tolkien", 30, "4.7",
 				"addItemBook() doesn't reject a already existing book title without taking into account leading or trailing blanks");
 
