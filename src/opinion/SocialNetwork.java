@@ -20,8 +20,44 @@ public class SocialNetwork implements ISocialNetwork {
 	private int nbFilms = 0;
 	private int nbBooks = 0;
 
-	private static enum ItemType {
-		BOOK, FILM
+	/**
+	 * 
+	 * @param login
+	 * @param password
+	 * @param title
+	 * @param kind
+	 * @param director
+	 * @param scenarist
+	 * @param duration
+	 * @throws BadEntryException
+	 */
+	private void testFilmParameterCorrect(String login, String password, String title, String kind, String director,
+			String scenarist, int duration) throws BadEntryException {
+		testItemParameterCorrect(login, password, title, kind);
+		if (scenarist == null) {
+			throw new BadEntryException("Author must be instantiate");
+		} else if (director == null) {
+			throw new BadEntryException("Director must be instantiate");
+		} else if (duration <= 0) {
+			throw new BadEntryException("Duration must be instantiate");
+		}
+	}
+	
+	/**
+	 * 
+	 * @param title
+	 * @throws ItemBookAlreadyExistsException
+	 */
+	private void testBookExist(String title) throws ItemBookAlreadyExistsException {
+		for (Iterator<Item> it = items.iterator(); it.hasNext();) {
+			Item item = (Item) it.next();
+			if (item.getTitle().toLowerCase().equals(title.trim().toLowerCase())) {
+				if (item instanceof Book) {
+					throw new ItemBookAlreadyExistsException();
+				}
+				return;
+			}
+		}
 	}
 
 	/**
@@ -34,21 +70,14 @@ public class SocialNetwork implements ISocialNetwork {
 	 *             throw an exception if there is an item of the same type with the
 	 *             same title
 	 */
-	private void testItemExist(String title, ItemType itemType) throws ItemBookAlreadyExistsException {
+	private void testFilmExist(String title) throws ItemFilmAlreadyExistsException {
 		for (Iterator<Item> it = items.iterator(); it.hasNext();) {
 			Item item = (Item) it.next();
 			if (item.getTitle().toLowerCase().equals(title.trim().toLowerCase())) {
-				if (ItemType.BOOK.equals(itemType)) {
-					if (item instanceof Book) {
-						throw new ItemBookAlreadyExistsException();
-					}
-					return;
-				} else {
-					if (item instanceof Film) {
-						throw new ItemBookAlreadyExistsException();
-					}
-					return;
+				if (item instanceof Film) {
+					throw new ItemFilmAlreadyExistsException();
 				}
+				return;
 			}
 		}
 	}
@@ -112,7 +141,15 @@ public class SocialNetwork implements ISocialNetwork {
 			throw new BadEntryException("Profile must be instantiate");
 		}
 	}
-
+	
+	/**
+	 * 
+	 * @param login
+	 * @param password
+	 * @param title
+	 * @param kind
+	 * @throws BadEntryException
+	 */
 	private void testItemParameterCorrect(String login, String password, String title, String kind)
 			throws BadEntryException {
 		if (login == null || login.trim().length() == 0) {
@@ -126,8 +163,19 @@ public class SocialNetwork implements ISocialNetwork {
 			throw new BadEntryException("Kind of book must be instantiate");
 		}
 	}
-	
-	private void testBookParameterCorrect(String login, String password, String title, String kind, String author, int nbPages) throws BadEntryException {
+
+	/**
+	 * 
+	 * @param login
+	 * @param password
+	 * @param title
+	 * @param kind
+	 * @param author
+	 * @param nbPages
+	 * @throws BadEntryException
+	 */
+	private void testBookParameterCorrect(String login, String password, String title, String kind, String author,
+			int nbPages) throws BadEntryException {
 		testItemParameterCorrect(login, password, title, kind);
 		if (author == null) {
 			throw new BadEntryException("Author must be instantiate");
@@ -167,7 +215,11 @@ public class SocialNetwork implements ISocialNetwork {
 	@Override
 	public void addItemFilm(String login, String password, String title, String kind, String director, String scenarist,
 			int duration) throws BadEntryException, NotMemberException, ItemFilmAlreadyExistsException {
-		// TODO Auto-generated method stub
+		testFilmParameterCorrect(login, password, title, kind, director, scenarist, duration);
+		testMemberCorrect(login, password);
+		testFilmExist(title);
+		items.add(new Film(title.trim(), kind.trim(), director.trim(), scenarist.trim(), duration));
+		nbFilms++;
 	}
 
 	@Override
@@ -175,7 +227,7 @@ public class SocialNetwork implements ISocialNetwork {
 			throws BadEntryException, NotMemberException, ItemBookAlreadyExistsException {
 		testBookParameterCorrect(login, password, title, kind, author, nbPages);
 		testMemberCorrect(login, password);
-		testItemExist(title, ItemType.BOOK);
+		testBookExist(title);
 		items.add(new Book(title.trim(), kind.trim(), author.trim(), nbPages));
 		nbBooks++;
 	}
