@@ -17,7 +17,6 @@ public class SocialNetwork implements ISocialNetwork {
 	private ArrayList<Member> members = new ArrayList<Member>();
 	private ArrayList<Item> items = new ArrayList<Item>();
 
-
 	/**
 	 * 
 	 * @param login
@@ -29,9 +28,9 @@ public class SocialNetwork implements ISocialNetwork {
 	 * @param duration
 	 * @throws BadEntryException
 	 */
-	private void testFilmParameterCorrect(String login, String password, String title, String kind, String director,
+	private void testFilmParameterCorrect(String title, String kind, String director,
 			String scenarist, int duration) throws BadEntryException {
-		testItemParameterCorrect(login, password, title, kind);
+		testItemParameterCorrect(title, kind);
 		if (scenarist == null) {
 			throw new BadEntryException("Author must be instantiate");
 		} else if (director == null) {
@@ -40,7 +39,7 @@ public class SocialNetwork implements ISocialNetwork {
 			throw new BadEntryException("Duration must be instantiate");
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param title
@@ -106,7 +105,14 @@ public class SocialNetwork implements ISocialNetwork {
 	 *             throw an exception if the member doesn't exist or if the password
 	 *             isn't correct
 	 */
-	private void testMemberCorrect(String login, String password) throws NotMemberException {
+	private void testMemberCorrect(String login, String password) throws BadEntryException, NotMemberException {
+		if (login == null || login.trim().length() == 0) {
+			throw new BadEntryException("Login must be instantiate and contains at least one non-space character");
+		} else if (password == null || password.trim().length() < 4) {
+			throw new BadEntryException(
+					"Password must be instantiate and contains at least 3 characters (not taking into account leading or trailing blanks)");
+		}
+
 		for (Iterator<Member> it = members.iterator(); it.hasNext();) {
 			Member member = (Member) it.next();
 			if (member.getLogin().toLowerCase().equals(login.trim().toLowerCase())) {
@@ -139,7 +145,7 @@ public class SocialNetwork implements ISocialNetwork {
 			throw new BadEntryException("Profile must be instantiate");
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param login
@@ -148,14 +154,8 @@ public class SocialNetwork implements ISocialNetwork {
 	 * @param kind
 	 * @throws BadEntryException
 	 */
-	private void testItemParameterCorrect(String login, String password, String title, String kind)
-			throws BadEntryException {
-		if (login == null || login.trim().length() == 0) {
-			throw new BadEntryException("Login must be instantiate and contains at least one non-space character");
-		} else if (password == null || password.trim().length() < 4) {
-			throw new BadEntryException(
-					"Password must be instantiate and contains at least 3 characters (not taking into account leading or trailing blanks)");
-		} else if (title == null || title.trim().length() == 0) {
+	private void testItemParameterCorrect(String title, String kind) throws BadEntryException {
+		if (title == null || title.trim().length() == 0) {
 			throw new BadEntryException("Title must be instantiate and contains at least one non-space character");
 		} else if (kind == null) {
 			throw new BadEntryException("Kind of book must be instantiate");
@@ -172,9 +172,9 @@ public class SocialNetwork implements ISocialNetwork {
 	 * @param nbPages
 	 * @throws BadEntryException
 	 */
-	private void testBookParameterCorrect(String login, String password, String title, String kind, String author,
-			int nbPages) throws BadEntryException {
-		testItemParameterCorrect(login, password, title, kind);
+	private void testBookParameterCorrect(String title, String kind, String author, int nbPages)
+			throws BadEntryException {
+		testItemParameterCorrect(title, kind);
 		if (author == null) {
 			throw new BadEntryException("Author must be instantiate");
 		} else if (nbPages <= 0) {
@@ -227,7 +227,7 @@ public class SocialNetwork implements ISocialNetwork {
 	@Override
 	public void addItemFilm(String login, String password, String title, String kind, String director, String scenarist,
 			int duration) throws BadEntryException, NotMemberException, ItemFilmAlreadyExistsException {
-		testFilmParameterCorrect(login, password, title, kind, director, scenarist, duration);
+		testFilmParameterCorrect(title, kind, director, scenarist, duration);
 		testMemberCorrect(login, password);
 		testFilmExist(title);
 		items.add(new Film(title.trim(), kind.trim(), director.trim(), scenarist.trim(), duration));
@@ -236,7 +236,7 @@ public class SocialNetwork implements ISocialNetwork {
 	@Override
 	public void addItemBook(String login, String password, String title, String kind, String author, int nbPages)
 			throws BadEntryException, NotMemberException, ItemBookAlreadyExistsException {
-		testBookParameterCorrect(login, password, title, kind, author, nbPages);
+		testBookParameterCorrect(title, kind, author, nbPages);
 		testMemberCorrect(login, password);
 		testBookExist(title);
 		items.add(new Book(title.trim(), kind.trim(), author.trim(), nbPages));
