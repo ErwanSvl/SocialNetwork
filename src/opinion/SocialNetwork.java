@@ -17,8 +17,6 @@ public class SocialNetwork implements ISocialNetwork {
 	private ArrayList<Member> members = new ArrayList<Member>();
 	private ArrayList<Item> items = new ArrayList<Item>();
 
-	private int nbFilms = 0;
-	private int nbBooks = 0;
 
 	/**
 	 * 
@@ -194,11 +192,25 @@ public class SocialNetwork implements ISocialNetwork {
 
 	@Override
 	public int nbFilms() {
+		int nbFilms = 0;
+		for (Iterator<Item> iterator = items.iterator(); iterator.hasNext();) {
+			Item item = (Item) iterator.next();
+			if (item instanceof Film) {
+				nbFilms++;
+			}
+		}
 		return nbFilms;
 	}
 
 	@Override
 	public int nbBooks() {
+		int nbBooks = 0;
+		for (Iterator<Item> iterator = items.iterator(); iterator.hasNext();) {
+			Item item = (Item) iterator.next();
+			if (item instanceof Book) {
+				nbBooks++;
+			}
+		}
 		return nbBooks;
 	}
 
@@ -219,7 +231,6 @@ public class SocialNetwork implements ISocialNetwork {
 		testMemberCorrect(login, password);
 		testFilmExist(title);
 		items.add(new Film(title.trim(), kind.trim(), director.trim(), scenarist.trim(), duration));
-		nbFilms++;
 	}
 
 	@Override
@@ -229,7 +240,6 @@ public class SocialNetwork implements ISocialNetwork {
 		testMemberCorrect(login, password);
 		testBookExist(title);
 		items.add(new Book(title.trim(), kind.trim(), author.trim(), nbPages));
-		nbBooks++;
 	}
 
 	@Override
