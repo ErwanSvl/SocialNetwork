@@ -1,12 +1,11 @@
 package tests;
 
-import opinion.ISocialNetwork;
-import opinion.SocialNetwork;
-
 import exceptions.BadEntryException;
+import exceptions.NotItemException;
 import exceptions.NotMemberException;
 import exceptions.NotTestReportException;
-import exceptions.NotItemException;
+import opinion.ISocialNetwork;
+import opinion.SocialNetwork;
 
 public class ReviewItemBookTest {
 

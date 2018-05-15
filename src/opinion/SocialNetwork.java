@@ -10,14 +10,12 @@ import exceptions.ItemFilmAlreadyExistsException;
 import exceptions.MemberAlreadyExistsException;
 import exceptions.NotItemException;
 import exceptions.NotMemberException;
-import opinion.ISocialNetwork;
 
 public class SocialNetwork implements ISocialNetwork {
 
 	// Generate an empty list of members and an empty list of items (film or book)
-	private ArrayList<Member> members = new ArrayList<Member>(); 
+	private ArrayList<Member> members = new ArrayList<Member>();
 	private ArrayList<Item> items = new ArrayList<Item>();
-	private ArrayList<Review> reviews = new ArrayList<Review>();
 
 	private enum Itemtype {
 		BOOK, FILM
@@ -27,9 +25,9 @@ public class SocialNetwork implements ISocialNetwork {
 	 * Test if the parameters of a new film is correct
 	 * 
 	 * @param title
-	 * 			  the new film's title
+	 *            the new film's title
 	 * @param kind
-	 * 			  the new film's kind (adventure, thriller, etc.)
+	 *            the new film's kind (adventure, thriller, etc.)
 	 * @param director
 	 *            the new film's director
 	 * @param scenarist
@@ -45,7 +43,7 @@ public class SocialNetwork implements ISocialNetwork {
 	 *             <li>if director is not instantiated</li>
 	 *             <li>if duration is not strictly positive</li>
 	 *             </ul>
-	 * <br>
+	 *             <br>
 	 */
 	private void testFilmParameterCorrect(String title, String kind, String director, String scenarist, int duration)
 			throws BadEntryException {
@@ -86,12 +84,14 @@ public class SocialNetwork implements ISocialNetwork {
 
 	/**
 	 * Test if a Book with the same title exist
-	 * @param title the book's title which have to be tested
+	 * 
+	 * @param title
+	 *            the book's title which have to be tested
 	 * @throws ItemBookAlreadyExistsException
 	 *             a book with the same title is already registered in the
 	 *             <i>SocialNetwork</i> (same title : not case-sensitive and
 	 *             leadings/trailings blanks are not taken into account)
-	 *             
+	 * 
 	 */
 	private void testBookExist(String title) throws ItemBookAlreadyExistsException {
 		for (Iterator<Item> it = items.iterator(); it.hasNext();) {
@@ -114,7 +114,7 @@ public class SocialNetwork implements ISocialNetwork {
 	 *             a film with the same title is already registered in the
 	 *             <i>SocialNetwork</i> (same title : not case-sensitive and
 	 *             leadings/trailings blanks are not taken into account)
-	 *             
+	 * 
 	 */
 	private void testFilmExist(String title) throws ItemFilmAlreadyExistsException {
 		for (Iterator<Item> it = items.iterator(); it.hasNext();) {
@@ -156,16 +156,15 @@ public class SocialNetwork implements ISocialNetwork {
 	 *             <ul>
 	 *             <li>if login is not instantiated or contains less than one
 	 *             non-space character</li>
-	 *             <li>if password is not instantiated or contains less than
-	 *             four characters (not taking into account leading or trailing
+	 *             <li>if password is not instantiated or contains less than four
+	 *             characters (not taking into account leading or trailing
 	 *             blanks)</li>
 	 *             <li>if title is not instantiated or contains less than one
-	 *             non-space character</li>
-	 * <br>
+	 *             non-space character</li> <br>
 	 * @throws NotMemberException
 	 *             throw an exception if the member doesn't exist or if the password
 	 *             isn't correct
-	 *             
+	 * 
 	 */
 	private Member testMemberCorrect(String login, String password) throws BadEntryException, NotMemberException {
 		if (login == null || login.trim().length() == 0) {
@@ -252,19 +251,6 @@ public class SocialNetwork implements ISocialNetwork {
 		}
 	}
 
-	private float getMean(Item item) {
-		float sum = 0;
-		int nbReview = 0;
-		for (Iterator<Review> it = reviews.iterator(); it.hasNext();) {
-			Review review = (Review) it.next();
-			if (review.getItem().equals(item)) {
-				sum += review.getMark();
-				nbReview++;
-			}
-		}
-		return sum / nbReview;
-	}
-
 	/**
 	 * return the number of member in the <i>SocialNetwork</i>
 	 */
@@ -328,8 +314,11 @@ public class SocialNetwork implements ISocialNetwork {
 	@Override
 	public float reviewItemFilm(String login, String password, String title, float mark, String comment)
 			throws BadEntryException, NotMemberException, NotItemException {
-		// TODO Auto-generated method stub
-		return 0;
+		testReviewParameter(title, mark, comment);
+		Item item = testItemExist(title, Itemtype.FILM);
+		Member member = testMemberCorrect(login, password);
+		item.addReview(new Review(mark, comment, member, item));
+		return item.getMean();
 	}
 
 	@Override
@@ -338,8 +327,8 @@ public class SocialNetwork implements ISocialNetwork {
 		testReviewParameter(title, mark, comment);
 		Item item = testItemExist(title, Itemtype.BOOK);
 		Member member = testMemberCorrect(login, password);
-		reviews.add(new Review(mark, comment, member, item));
-		return getMean(item);
+		item.addReview(new Review(mark, comment, member, item));
+		return item.getMean();
 	}
 
 	@Override
@@ -365,17 +354,6 @@ public class SocialNetwork implements ISocialNetwork {
 		} else {
 			socialNetwork += "Liste des items :\n";
 			for (Iterator<Item> it = items.iterator(); it.hasNext();) {
-				socialNetwork += " - " + it.next() + "\n";
-
-			}
-			socialNetwork += "\n";
-		}
-
-		if (reviews.size() == 0) {
-			socialNetwork += "Aucune évaluations dans le système\n";
-		} else {
-			socialNetwork += "Liste des évaluations :\n";
-			for (Iterator<Review> it = reviews.iterator(); it.hasNext();) {
 				socialNetwork += " - " + it.next() + "\n";
 
 			}

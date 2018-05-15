@@ -3,8 +3,8 @@ package opinion;
 import java.util.LinkedList;
 
 import exceptions.BadEntryException;
-import exceptions.ItemFilmAlreadyExistsException;
 import exceptions.ItemBookAlreadyExistsException;
+import exceptions.ItemFilmAlreadyExistsException;
 import exceptions.MemberAlreadyExistsException;
 import exceptions.NotItemException;
 import exceptions.NotMemberException;
@@ -20,7 +20,8 @@ import exceptions.NotMemberException;
 
 /**
  * System for collecting opinions on items from various areas (literature,
- * cinema, art, gastronomy, etc.). </p>
+ * cinema, art, gastronomy, etc.).
+ * </p>
  * <p>
  * Access to items and opinions related to them is public. Creating a new item
  * or giving an opinion, on the other hand, is limited to users with registered
@@ -71,12 +72,12 @@ public interface ISocialNetwork {
 	 *             <ul>
 	 *             <li>if login is not instantiated or contains less than one
 	 *             non-space character</li>
-	 *             <li>if password is not instantiated or contains less than
-	 *             four characters (not taking into account leading or trailing
+	 *             <li>if password is not instantiated or contains less than four
+	 *             characters (not taking into account leading or trailing
 	 *             blanks)</li>
 	 *             <li>if profile is not instantiated</li>
 	 *             </ul>
-	 * <br>
+	 *             <br>
 	 * 
 	 * @throws MemberAlreadyExistsException
 	 *             if a member with the same login is already registered in the
@@ -109,8 +110,8 @@ public interface ISocialNetwork {
 	 *             <ul>
 	 *             <li>if login is not instantiated or contains less than one
 	 *             non-space character</li>
-	 *             <li>if password is not instantiated or contains less than
-	 *             four characters (not taking into account leading or trailing
+	 *             <li>if password is not instantiated or contains less than four
+	 *             characters (not taking into account leading or trailing
 	 *             blanks)</li>
 	 *             <li>if title is not instantiated or contains less than one
 	 *             non-space character</li>
@@ -119,21 +120,19 @@ public interface ISocialNetwork {
 	 *             <li>if scenarist is not instanciated</li>
 	 *             <li>if duration is not stricly positive
 	 *             </ul>
-	 * <br>
+	 *             <br>
 	 * @throws NotMemberException
-	 *             if login does not match with the login of a registered member
-	 *             in <i>SocialNetwork</i> or if password does not correspond to
-	 *             his registered password.
+	 *             if login does not match with the login of a registered member in
+	 *             <i>SocialNetwork</i> or if password does not correspond to his
+	 *             registered password.
 	 * @throws ItemFilmAlreadyExistsException
 	 *             : a film with the same title is already registered in the
 	 *             <i>SocialNetwork</i> (same title : not case-sensitive and
 	 *             leadings/trailings blanks are not taken into account)
 	 * 
 	 */
-	public void addItemFilm(String login, String password, String title,
-			String kind, String director, String scenarist, int duration)
-			throws BadEntryException, NotMemberException,
-			ItemFilmAlreadyExistsException;
+	public void addItemFilm(String login, String password, String title, String kind, String director, String scenarist,
+			int duration) throws BadEntryException, NotMemberException, ItemFilmAlreadyExistsException;
 
 	/**
 	 * Add a new book to the <i>SocialNetwork</i>
@@ -155,8 +154,8 @@ public interface ISocialNetwork {
 	 *             <ul>
 	 *             <li>if login is not instantiated or contains less than one
 	 *             non-space character</li>
-	 *             <li>if password is not instantiated or contains less than
-	 *             four characters (not taking into account leading or trailing
+	 *             <li>if password is not instantiated or contains less than four
+	 *             characters (not taking into account leading or trailing
 	 *             blanks)</li>
 	 *             <li>if title is not instantiated or contains less than one
 	 *             non-space character</li>
@@ -164,25 +163,25 @@ public interface ISocialNetwork {
 	 *             <li>if author is not instanciated</li>
 	 *             <li>if nbPages is not stricly positive
 	 *             </ul>
-	 * <br>
+	 *             <br>
 	 * @throws NotMemberException
-	 *             if login does not match with the login of a registered member
-	 *             in <i>SocialNetwork</i> or if password does not correspond to
-	 *             his registered password.
+	 *             if login does not match with the login of a registered member in
+	 *             <i>SocialNetwork</i> or if password does not correspond to his
+	 *             registered password.
 	 * @throws ItemBookAlreadyExistsException
 	 *             a book with the same title is already registered in the
 	 *             <i>SocialNetwork</i> (same title : not case-sensitive and
 	 *             leadings/trailings blanks are not taken into account)
 	 * 
 	 */
-	public void addItemBook(String login, String password, String title,
-			String kind, String author, int nbPages) throws BadEntryException,
-			NotMemberException, ItemBookAlreadyExistsException;
+	public void addItemBook(String login, String password, String title, String kind, String author, int nbPages)
+			throws BadEntryException, NotMemberException, ItemBookAlreadyExistsException;
 
 	/**
 	 * Add in the <i>SocialNetwork</i> a new review for a film on behalf of a
-	 * specific member.</br> If this member has already given a review for this
-	 * same film before, the new review replaces the previous one.
+	 * specific member.</br>
+	 * If this member has already given a review for this same film before, the new
+	 * review replaces the previous one.
 	 * 
 	 * @param login
 	 *            login of the member adding the review
@@ -199,34 +198,34 @@ public interface ISocialNetwork {
 	 *             <ul>
 	 *             <li>if login is not instantiated or contains less than one
 	 *             non-space character</li>
-	 *             <li>if password is not instantiated or contains less than
-	 *             four characters (not taking into account leading or trailing
+	 *             <li>if password is not instantiated or contains less than four
+	 *             characters (not taking into account leading or trailing
 	 *             blanks)</li>
 	 *             <li>if title is not instantiated or contains less than one
 	 *             non-space character</li>
-	 *             <li>if mark is not greater or equals to 0.0 and lesser or
-	 *             equals to 5.0.</li>
+	 *             <li>if mark is not greater or equals to 0.0 and lesser or equals
+	 *             to 5.0.</li>
 	 *             <li>if comment is not instantiated</li>
 	 *             </ul>
-	 * <br>
+	 *             <br>
 	 * @throws NotMemberException
-	 *             if login does not match with the login of a registered member
-	 *             in <i>SocialNetwork</i> or if password does not correspond to
-	 *             his registered password.
+	 *             if login does not match with the login of a registered member in
+	 *             <i>SocialNetwork</i> or if password does not correspond to his
+	 *             registered password.
 	 * @throws NotItemException
 	 *             if title is not registered as a film's title in the
 	 *             <i>SocialNetwork</i>
 	 * 
 	 * @return mean of the marks for this film
 	 */
-	public float reviewItemFilm(String login, String password, String title,
-			float mark, String comment) throws BadEntryException,
-			NotMemberException, NotItemException;
+	public float reviewItemFilm(String login, String password, String title, float mark, String comment)
+			throws BadEntryException, NotMemberException, NotItemException;
 
 	/**
 	 * Add in the <i>SocialNetwork</i> a new review for a book on behalf of a
-	 * specific member.</br> If this member has already given a review for this
-	 * same book before, the new review replaces the previous one.
+	 * specific member.</br>
+	 * If this member has already given a review for this same book before, the new
+	 * review replaces the previous one.
 	 * 
 	 * @param login
 	 *            login of the member adding the review
@@ -243,29 +242,28 @@ public interface ISocialNetwork {
 	 *             <ul>
 	 *             <li>if login is not instantiated or contains less than one
 	 *             non-space character</li>
-	 *             <li>if password is not instantiated or contains less than
-	 *             four characters (not taking into account leading or trailing
+	 *             <li>if password is not instantiated or contains less than four
+	 *             characters (not taking into account leading or trailing
 	 *             blanks)</li>
 	 *             <li>if title is not instantiated or contains less than one
 	 *             non-space character</li>
-	 *             <li>if mark is not greater or equals to 0.0 and lesser or
-	 *             equals to 5.0.</li>
+	 *             <li>if mark is not greater or equals to 0.0 and lesser or equals
+	 *             to 5.0.</li>
 	 *             <li>if comment is not instantiated</li>
 	 *             </ul>
-	 * <br>
+	 *             <br>
 	 * @throws NotMemberException
-	 *             if login does not match with the login of a registered member
-	 *             in <i>SocialNetwork</i> or if password does not correspond to
-	 *             his registered password.
+	 *             if login does not match with the login of a registered member in
+	 *             <i>SocialNetwork</i> or if password does not correspond to his
+	 *             registered password.
 	 * @throws NotItemException
 	 *             if title is not registered as a book's title in the
 	 *             <i>SocialNetwork</i>
 	 * 
 	 * @return mean of the marks for this book
 	 */
-	public float reviewItemBook(String login, String password, String title,
-			float mark, String comment) throws BadEntryException,
-			NotMemberException, NotItemException;
+	public float reviewItemBook(String login, String password, String title, float mark, String comment)
+			throws BadEntryException, NotMemberException, NotItemException;
 
 	/**
 	 * Search for items in the <i>SocialNetwork</i>.
@@ -274,15 +272,15 @@ public interface ISocialNetwork {
 	 *            title of searched item(s)
 	 * 
 	 * @throws BadEntryException
-	 *             if title is not instantiated or contains less than one
-	 *             non-space character
+	 *             if title is not instantiated or contains less than one non-space
+	 *             character
 	 * 
 	 * @return LinkedList <String> a list of String representing all items (book
-	 *         and/or film) matching the searched name.</br> Each String will
-	 *         contain at least the score of the corresponding item.
+	 *         and/or film) matching the searched name.</br>
+	 *         Each String will contain at least the score of the corresponding
+	 *         item.
 	 */
-	public LinkedList<String> consultItems(String title)
-			throws BadEntryException;
+	public LinkedList<String> consultItems(String title) throws BadEntryException;
 
 	/**
 	 * A <i>SocialNetwork</i> is described at least by member's names, book's
