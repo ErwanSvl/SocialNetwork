@@ -310,7 +310,7 @@ public class AddItemBookTest {
 
 		nbTests++;
 		if (nbMembers != sn.nbMembers()) {
-			System.out.println("Error : the number of members was unexepectedly chaged by addItemBook()");
+			System.out.println("Error : the number of members was unexepectedly changed by addItemBook()");
 		}
 
 		// Display final state of 'sn'
