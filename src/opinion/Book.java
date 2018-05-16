@@ -14,7 +14,7 @@ public class Book extends Item {
 	public String toString() {
 		String book = new String();
 		book = super.toString();
-		book += " auteur du livre :" + this.author + ", nombre de pages :" + this.nbPages;
+		book += "   L'auteur du livre est " + this.author + " et il contient " + this.nbPages + " pages";
 		return book;
 	}
 }

@@ -16,8 +16,8 @@ public class Film extends Item {
 	public String toString() {
 		String book = new String();
 		book = super.toString();
-		book += " réalisateur du film : " + this.director + ", scénariste : " + this.scenarist + ", durée : "
-				+ this.duration;
+		book += "   Le réalisateur du film est " + this.director + ", son scénariste est " + this.scenarist + " et le film dure "
+				+ this.duration + " minutes.";
 		return book;
 	}
 }

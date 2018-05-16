@@ -20,16 +20,15 @@ public abstract class Item {
 	@Override
 	public String toString() {
 		String item = new String();
-		item = this.title + " genre : " + this.kind;
+		item = "\"" + this.title + "\" fait parti de la catégorie : " + this.kind;
 		if (listReviews.size() == 0) {
-			item += ". Aucune évaluations pour ce produit\n";
+			item += ". Aucune évaluations pour ce produit.\n";
 		} else {
-			item += ". Liste des évaluations pour ce produit :\n";
+			item += ". \n   Liste des évaluations pour ce produit (moyenne : " + getMean() + "):\n";
 			for (Iterator<Review> it = listReviews.iterator(); it.hasNext();) {
 				item += " 	* " + it.next() + "\n";
 
 			}
-			item += "\n";
 		}
 		return item;
 	}

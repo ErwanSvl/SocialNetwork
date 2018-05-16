@@ -67,7 +67,7 @@ public class SocialNetwork implements ISocialNetwork {
 	private Item testItemExist(String title, Itemtype itemtype) throws NotItemException {
 		for (Iterator<Item> iterator = items.iterator(); iterator.hasNext();) {
 			Item item = (Item) iterator.next();
-			if (item.getTitle().toLowerCase().equals(title.trim().toLowerCase())) {
+			if (item.getTitle().equalsIgnoreCase(title.trim())) {
 				if (itemtype == Itemtype.BOOK) {
 					if (item instanceof Book) {
 						return item;
@@ -96,7 +96,7 @@ public class SocialNetwork implements ISocialNetwork {
 	private void testBookExist(String title) throws ItemBookAlreadyExistsException {
 		for (Iterator<Item> it = items.iterator(); it.hasNext();) {
 			Item item = (Item) it.next();
-			if (item.getTitle().toLowerCase().equals(title.trim().toLowerCase())) {
+			if (item.getTitle().equalsIgnoreCase(title.trim())) {
 				if (item instanceof Book) {
 					throw new ItemBookAlreadyExistsException();
 				}
@@ -119,7 +119,7 @@ public class SocialNetwork implements ISocialNetwork {
 	private void testFilmExist(String title) throws ItemFilmAlreadyExistsException {
 		for (Iterator<Item> it = items.iterator(); it.hasNext();) {
 			Item item = (Item) it.next();
-			if (item.getTitle().toLowerCase().equals(title.trim().toLowerCase())) {
+			if (item.getTitle().equalsIgnoreCase(title.trim())) {
 				if (item instanceof Film) {
 					throw new ItemFilmAlreadyExistsException();
 				}
@@ -176,7 +176,7 @@ public class SocialNetwork implements ISocialNetwork {
 
 		for (Iterator<Member> it = members.iterator(); it.hasNext();) {
 			Member member = (Member) it.next();
-			if (member.getLogin().toLowerCase().equals(login.trim().toLowerCase())) {
+			if (member.getLogin().equalsIgnoreCase(login.trim())) {
 				if (!member.getPassword().equals(password))
 					throw new NotMemberException("Password is not correct for this member");
 
@@ -333,8 +333,17 @@ public class SocialNetwork implements ISocialNetwork {
 
 	@Override
 	public LinkedList<String> consultItems(String title) throws BadEntryException {
-		// TODO Auto-generated method stub
-		return null;
+		if(title == null || title.trim().length() < 1) {
+			throw new BadEntryException("Title must be instantiate and contains at least one non-space character");
+		}
+		LinkedList<String> list = new LinkedList<String>();
+		for (Iterator<Item> it = items.iterator(); it.hasNext();) {
+			Item item = (Item) it.next();
+			if(item.getTitle().equalsIgnoreCase(title)) {
+				list.add(item.toString());
+			}
+		}
+		return list;
 	}
 
 	@Override
