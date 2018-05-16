@@ -1,3 +1,8 @@
+/**
+ * @author Erwan SEVELLEC
+ * @author Killian THEZELAIS
+ */
+
 package opinion;
 
 import java.util.ArrayList;
@@ -22,52 +27,18 @@ public class SocialNetwork implements ISocialNetwork {
 	}
 
 	/**
-	 * Test if the parameters of a new film is correct
-	 * 
-	 * @param title
-	 *            the new film's title
-	 * @param kind
-	 *            the new film's kind (adventure, thriller, etc.)
-	 * @param director
-	 *            the new film's director
-	 * @param scenarist
-	 *            the new film's scenarist
-	 * @param duration
-	 *            the new film's duration (in minutes)
-	 * @throws BadEntryException
-	 *             <ul>
-	 *             <li>if title is not instantiated or contains less than one
-	 *             non-space character</li>
-	 *             <li>if kind is not instantiated</li>
-	 *             <li>if scenarist is not instantiated</li>
-	 *             <li>if director is not instantiated</li>
-	 *             <li>if duration is not strictly positive</li>
-	 *             </ul>
-	 *             <br>
-	 */
-	private void testFilmParameterCorrect(String title, String kind, String director, String scenarist, int duration)
-			throws BadEntryException {
-		testItemParameterCorrect(title, kind);
-		if (scenarist == null) {
-			throw new BadEntryException("Author must be instantiate");
-		} else if (director == null) {
-			throw new BadEntryException("Director must be instantiate");
-		} else if (duration <= 0) {
-			throw new BadEntryException("Duration must be instantiate");
-		}
-	}
-
-	/**
 	 * Test if a Item with the same type and the same title exist
 	 * 
 	 * @param title
 	 * @param itemtype
+	 * @return the item with this type and this title
 	 * @throws NotItemException
 	 */
 	private Item testItemExist(String title, Itemtype itemtype) throws NotItemException {
 		for (Iterator<Item> iterator = items.iterator(); iterator.hasNext();) {
 			Item item = (Item) iterator.next();
 			if (item.getTitle().equalsIgnoreCase(title.trim())) {
+				// Test if the item is the same type as the requested one
 				if (itemtype == Itemtype.BOOK) {
 					if (item instanceof Book) {
 						return item;
@@ -83,7 +54,7 @@ public class SocialNetwork implements ISocialNetwork {
 	}
 
 	/**
-	 * Test if a Book with the same title exist
+	 * Test if a Book with the same title already exist
 	 * 
 	 * @param title
 	 *            the book's title which have to be tested
@@ -100,13 +71,12 @@ public class SocialNetwork implements ISocialNetwork {
 				if (item instanceof Book) {
 					throw new ItemBookAlreadyExistsException();
 				}
-				return;
 			}
 		}
 	}
 
 	/**
-	 * Test if a Film with the same title exist
+	 * Test if a Film with the same title already exist
 	 * 
 	 * @param title
 	 *            the film's title which have to be tested
@@ -123,13 +93,13 @@ public class SocialNetwork implements ISocialNetwork {
 				if (item instanceof Film) {
 					throw new ItemFilmAlreadyExistsException();
 				}
-				return;
 			}
 		}
 	}
 
 	/**
-	 * Test if a member with the same login exist in the <i>SocialNetwork</i>
+	 * Test if a member with the same login already exist in the
+	 * <i>SocialNetwork</i>
 	 * 
 	 * @param login
 	 *            login that must be verified
@@ -152,6 +122,7 @@ public class SocialNetwork implements ISocialNetwork {
 	 *            login of the member which have to be tested
 	 * @param password
 	 *            password of the member which have to be tested
+	 * @return the member with this login and this password
 	 * @throws BadEntryException
 	 *             <ul>
 	 *             <li>if login is not instantiated or contains less than one
@@ -169,7 +140,7 @@ public class SocialNetwork implements ISocialNetwork {
 	private Member testMemberCorrect(String login, String password) throws BadEntryException, NotMemberException {
 		if (login == null || login.trim().length() == 0) {
 			throw new BadEntryException("Login must be instantiate and contains at least one non-space character");
-		} else if (password == null || password.trim().length() < 4) {
+		} else if (password == null || password.trim().length() < 4) { // Space in password are not trim
 			throw new BadEntryException(
 					"Password must be instantiate and contains at least 3 characters (not taking into account leading or trailing blanks)");
 		}
@@ -215,7 +186,7 @@ public class SocialNetwork implements ISocialNetwork {
 	 * @throws BadEntryException
 	 *             throw an exception if at least one parameter is not correct
 	 */
-	private void testItemParameterCorrect(String title, String kind) throws BadEntryException {
+	private void testItemParameters(String title, String kind) throws BadEntryException {
 		if (title == null || title.trim().length() == 0) {
 			throw new BadEntryException("Title must be instantiate and contains at least one non-space character");
 		} else if (kind == null) {
@@ -224,6 +195,7 @@ public class SocialNetwork implements ISocialNetwork {
 	}
 
 	/**
+	 * Test if parameters for a book are correct
 	 * 
 	 * @param title
 	 * @param kind
@@ -231,9 +203,8 @@ public class SocialNetwork implements ISocialNetwork {
 	 * @param nbPages
 	 * @throws BadEntryException
 	 */
-	private void testBookParameterCorrect(String title, String kind, String author, int nbPages)
-			throws BadEntryException {
-		testItemParameterCorrect(title, kind);
+	private void testBookParameters(String title, String kind, String author, int nbPages) throws BadEntryException {
+		testItemParameters(title, kind);
 		if (author == null) {
 			throw new BadEntryException("Author must be instantiate");
 		} else if (nbPages <= 0) {
@@ -241,7 +212,51 @@ public class SocialNetwork implements ISocialNetwork {
 		}
 	}
 
-	private void testReviewParameter(String title, float mark, String comment) throws BadEntryException {
+	/**
+	 * Test if the parameters for a film is correct
+	 * 
+	 * @param title
+	 *            the new film's title
+	 * @param kind
+	 *            the new film's kind (adventure, thriller, etc.)
+	 * @param director
+	 *            the new film's director
+	 * @param scenarist
+	 *            the new film's scenarist
+	 * @param duration
+	 *            the new film's duration (in minutes)
+	 * @throws BadEntryException
+	 *             <ul>
+	 *             <li>if title is not instantiated or contains less than one
+	 *             non-space character</li>
+	 *             <li>if kind is not instantiated</li>
+	 *             <li>if scenarist is not instantiated</li>
+	 *             <li>if director is not instantiated</li>
+	 *             <li>if duration is not strictly positive</li>
+	 *             </ul>
+	 *             <br>
+	 */
+	private void testFilmParameters(String title, String kind, String director, String scenarist, int duration)
+			throws BadEntryException {
+		testItemParameters(title, kind);
+		if (scenarist == null) {
+			throw new BadEntryException("Author must be instantiate");
+		} else if (director == null) {
+			throw new BadEntryException("Director must be instantiate");
+		} else if (duration <= 0) {
+			throw new BadEntryException("Duration must be instantiate");
+		}
+	}
+
+	/**
+	 * Test if the parameters for a review are correct
+	 * 
+	 * @param title
+	 * @param mark
+	 * @param comment
+	 * @throws BadEntryException
+	 */
+	private void testReviewParameters(String title, float mark, String comment) throws BadEntryException {
 		if (title == null || title.trim().length() == 0) {
 			throw new BadEntryException("Title must be instantiate and contains at least one non-space character");
 		} else if (mark < 0 || mark > 5) {
@@ -296,7 +311,7 @@ public class SocialNetwork implements ISocialNetwork {
 	@Override
 	public void addItemFilm(String login, String password, String title, String kind, String director, String scenarist,
 			int duration) throws BadEntryException, NotMemberException, ItemFilmAlreadyExistsException {
-		testFilmParameterCorrect(title, kind, director, scenarist, duration);
+		testFilmParameters(title, kind, director, scenarist, duration);
 		testMemberCorrect(login, password);
 		testFilmExist(title);
 		items.add(new Film(title.trim(), kind.trim(), director.trim(), scenarist.trim(), duration));
@@ -305,7 +320,7 @@ public class SocialNetwork implements ISocialNetwork {
 	@Override
 	public void addItemBook(String login, String password, String title, String kind, String author, int nbPages)
 			throws BadEntryException, NotMemberException, ItemBookAlreadyExistsException {
-		testBookParameterCorrect(title, kind, author, nbPages);
+		testBookParameters(title, kind, author, nbPages);
 		testMemberCorrect(login, password);
 		testBookExist(title);
 		items.add(new Book(title.trim(), kind.trim(), author.trim(), nbPages));
@@ -314,7 +329,7 @@ public class SocialNetwork implements ISocialNetwork {
 	@Override
 	public float reviewItemFilm(String login, String password, String title, float mark, String comment)
 			throws BadEntryException, NotMemberException, NotItemException {
-		testReviewParameter(title, mark, comment);
+		testReviewParameters(title, mark, comment);
 		Item item = testItemExist(title, Itemtype.FILM);
 		Member member = testMemberCorrect(login, password);
 		item.addReview(new Review(mark, comment, member, item));
@@ -324,7 +339,7 @@ public class SocialNetwork implements ISocialNetwork {
 	@Override
 	public float reviewItemBook(String login, String password, String title, float mark, String comment)
 			throws BadEntryException, NotMemberException, NotItemException {
-		testReviewParameter(title, mark, comment);
+		testReviewParameters(title, mark, comment);
 		Item item = testItemExist(title, Itemtype.BOOK);
 		Member member = testMemberCorrect(login, password);
 		item.addReview(new Review(mark, comment, member, item));
@@ -333,13 +348,13 @@ public class SocialNetwork implements ISocialNetwork {
 
 	@Override
 	public LinkedList<String> consultItems(String title) throws BadEntryException {
-		if(title == null || title.trim().length() < 1) {
+		if (title == null || title.trim().length() < 1) {
 			throw new BadEntryException("Title must be instantiate and contains at least one non-space character");
 		}
 		LinkedList<String> list = new LinkedList<String>();
 		for (Iterator<Item> it = items.iterator(); it.hasNext();) {
 			Item item = (Item) it.next();
-			if(item.getTitle().equalsIgnoreCase(title)) {
+			if (item.getTitle().equalsIgnoreCase(title)) {
 				list.add(item.toString());
 			}
 		}

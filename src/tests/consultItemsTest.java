@@ -1,3 +1,7 @@
+/**
+ * @author Erwan SEVELLEC
+ * @author Killian THEZELAIS
+ */
 package tests;
 
 import java.util.LinkedList;

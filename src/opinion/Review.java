@@ -1,3 +1,7 @@
+/**
+ * @author Erwan SEVELLEC
+ * @author Killian THEZELAIS
+ */
 package opinion;
 
 public class Review {
