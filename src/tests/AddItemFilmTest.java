@@ -125,7 +125,7 @@ public class AddItemFilmTest {
 		nbTests++;
 		nbErrors += addItemFilmBadEntryTest(sn, " ", "1234", "Star Wars: Episode IV – A New Hope", "science-fiction",
 				"George Lucas", "George Lucas", 121, "7.2",
-				"addItemBook() doesn't reject logins that don't contain at least one character other than space");
+				"addItemFilm() doesn't reject logins that don't contain at least one character other than space");
 
 		nbTests++;
 		nbErrors += addItemFilmBadEntryTest(sn, "esevellec", null, "Star Wars: Episode IV – A New Hope",
@@ -160,12 +160,12 @@ public class AddItemFilmTest {
 		nbTests++;
 		nbErrors += addItemFilmBadEntryTest(sn, "esevellec", "1234", "Star Wars: Episode IV – A New Hope",
 				"science-fiction", "George Lucas", "George Lucas", 0, "7.10",
-				"addItemBook() doesn't reject null duration");
+				"addItemFilm() doesn't reject null duration");
 
 		nbTests++;
 		nbErrors += addItemFilmBadEntryTest(sn, "esevellec", "1234", "Star Wars: Episode IV – A New Hope",
 				"science-fiction", "George Lucas", "George Lucas", -5, "7.11",
-				"addItemBook() doesn't reject negative duration");
+				"addItemFilm() doesn't reject negative duration");
 
 		// Test n°8
 
@@ -190,7 +190,7 @@ public class AddItemFilmTest {
 		nbTests++;
 		nbErrors += addItemFilmAleadyExistsException(sn, "esevellec", "1234", "Star Wars: Episode IV – A New Hope",
 				"science-fiction", "George Lucas", "George Lucas", 121, "8.4",
-				"addItemBook() doesn't reject a already existing film title");
+				"addItemFilm() doesn't reject a already existing film title");
 
 		nbTests++;
 		nbErrors += addItemFilmAleadyExistsException(sn, "esevellec", "1234", "Dune", "science-fiction", "David Lynch",
@@ -199,23 +199,23 @@ public class AddItemFilmTest {
 		nbTests++;
 		nbErrors += addItemFilmAleadyExistsException(sn, "esevellec", "1234", "StAr WARS: epIsode IV – A NEw HopE",
 				"science-fiction", "George Lucas", "George Lucas", 121, "8.6",
-				"addItemBook() doesn't reject a already existing film title with a different case");
+				"addItemFilm() doesn't reject a already existing film title with a different case");
 
 		nbTests++;
 		nbErrors += addItemFilmAleadyExistsException(sn, "esevellec", "1234",
 				"     Star Wars: Episode IV – A New Hope  ", "science-fiction", "George Lucas", "George Lucas", 121,
 				"8.7",
-				"addItemBook() doesn't reject a already existing film title without taking into account leading or trailing blanks");
+				"addItemFilm() doesn't reject a already existing film title without taking into account leading or trailing blanks");
 
 		nbTests++;
 		if (nbBooks != sn.nbBooks()) {
-			System.out.println("Error : the number of books was unexepectedly changed by addItemBook()");
+			System.out.println("Error : the number of books was unexepectedly changed by addItemFilm()");
 			nbErrors++;
 		}
 
 		nbTests++;
 		if (nbMembers != sn.nbMembers()) {
-			System.out.println("Error : the number of members was unexepectedly chaged by addItemBook()");
+			System.out.println("Error : the number of members was unexepectedly chaged by addItemFilm()");
 		}
 
 		// Display final state of 'sn'

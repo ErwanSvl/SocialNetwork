@@ -332,7 +332,13 @@ public class SocialNetwork implements ISocialNetwork {
 		testReviewParameters(title, mark, comment);
 		Item item = testItemExist(title, Itemtype.FILM);
 		Member member = testMemberCorrect(login, password);
-		item.addReview(new Review(mark, comment, member, item));
+		Review review = member.getExistingReview(item);
+		if (review!= null) {
+			member.modifyReview(review, mark, comment);
+		} else {
+			item.addReview(new Review(mark, comment, member, item));
+			member.addReview(new Review(mark, comment, member, item));
+		}
 		return item.getMean();
 	}
 
