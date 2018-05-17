@@ -45,9 +45,9 @@ public class consultItemsTest {
 	}
 
 	public static TestReport test() {
-		ISocialNetwork sn = new SocialNetwork();
 		int nbTests = 0;
 		int nbErrors = 0;
+		ISocialNetwork sn = new SocialNetwork();
 
 		// add a member and items in the social network
 		try {
@@ -59,6 +59,7 @@ public class consultItemsTest {
 
 		try {
 			sn.addItemBook("esevellec", "1234", "Dune", "Science-fiction", "Frank Herbert", 500);
+			sn.addItemBook("esevellec", "1234", "Alice's Adventures in Wonderland", "fantasy", "Lewis Carroll", 44);
 		} catch (Exception e) {
 			System.out.println("addItemBook() throw an exception");
 			e.printStackTrace();
@@ -67,14 +68,7 @@ public class consultItemsTest {
 		try {
 			sn.addItemFilm("esevellec", "1234", "Dune", "Science-fiction", "David Lynch", "David Lynch", 130);
 		} catch (Exception e) {
-			System.out.println("addItemBook() throw an exception");
-			e.printStackTrace();
-		}
-
-		try {
-			sn.addItemBook("esevellec", "1234", "Alice's Adventures in Wonderland", "fantasy", "Lewis Carroll", 44);
-		} catch (Exception e) {
-			System.out.println("addItemBook() throw an exception");
+			System.out.println("addItemFilm() throw an exception");
 			e.printStackTrace();
 		}
 

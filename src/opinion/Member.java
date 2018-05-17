@@ -14,6 +14,10 @@ public class Member {
 		this.password = password;
 		this.profile = profile;
 	}
+	
+	public boolean checkPassword(String password) {
+		return this.password.equals(password);
+	}
 
 	@Override
 	public String toString() {
@@ -26,9 +30,5 @@ public class Member {
 
 	public String getLogin() {
 		return login;
-	}
-	
-	public String getPassword() {
-		return password;
 	}
 }

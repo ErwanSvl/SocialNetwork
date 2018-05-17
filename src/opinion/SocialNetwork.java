@@ -15,16 +15,13 @@ import exceptions.ItemFilmAlreadyExistsException;
 import exceptions.MemberAlreadyExistsException;
 import exceptions.NotItemException;
 import exceptions.NotMemberException;
+import exceptions.NotReviewException;
 
-public class SocialNetwork implements ISocialNetwork {
+public class SocialNetwork implements ISocialNetworkPremium {
 
 	// Generate an empty list of members and an empty list of items (film or book)
 	private ArrayList<Member> members = new ArrayList<Member>();
 	private ArrayList<Item> items = new ArrayList<Item>();
-
-	private enum Itemtype {
-		BOOK, FILM
-	}
 
 	/**
 	 * Test if a Item with the same type and the same title exist
@@ -148,7 +145,7 @@ public class SocialNetwork implements ISocialNetwork {
 		for (Iterator<Member> it = members.iterator(); it.hasNext();) {
 			Member member = (Member) it.next();
 			if (member.getLogin().equalsIgnoreCase(login.trim())) {
-				if (!member.getPassword().equals(password))
+				if (!member.checkPassword(password))
 					throw new NotMemberException("Password is not correct for this member");
 
 				else
@@ -384,6 +381,12 @@ public class SocialNetwork implements ISocialNetwork {
 			socialNetwork += "\n";
 		}
 		return socialNetwork;
+	}
+	
+	@Override
+	public void reviewOpinion(String login, String password, String reviewAuthor, String title, Itemtype itemtype, float mark)
+			throws BadEntryException, NotMemberException, NotItemException, NotReviewException {
+		// TODO Auto-generated method stub
 	}
 
 }
