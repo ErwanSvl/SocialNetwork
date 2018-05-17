@@ -76,7 +76,7 @@ public class ReviewItemBookTest {
 		}
 	}
 
-	private static TestReport test() {
+	public static TestReport test() {
 		int nbTests = 0;
 		int nbErrors = 0;
 
