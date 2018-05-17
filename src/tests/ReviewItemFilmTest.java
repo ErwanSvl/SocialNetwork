@@ -178,7 +178,7 @@ public class ReviewItemFilmTest {
 
 		nbTests++;
 		if (nbBooks != sn.nbBooks()) {
-			System.out.println("Error : the number of books was unexepectedly chaged by reviewItemFilm()");
+			System.out.println("Error : the number of Films was unexepectedly chaged by reviewItemFilm()");
 		}
 
 		// Display final state of 'sn'

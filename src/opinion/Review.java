@@ -21,7 +21,19 @@ public class Review {
 	public float getMark() {
 		return mark;
 	}
+	
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	
+	public void setMark(float mark) {
+		this.mark = mark;
+	}
 
+	public Item getItem() {
+		return item;
+	}
+	
 	public String toString() {
 		return "mark : " + mark + "; comment : " + comment + "; membre : " + member;
 	}

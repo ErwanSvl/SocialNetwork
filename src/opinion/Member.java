@@ -4,10 +4,14 @@
  */
 package opinion;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class Member {
 	private String login;
 	private String password;
 	private String profile;
+	private ArrayList<Review> reviews = new ArrayList<Review>();
 
 	public Member(String login, String password, String profile) {
 		this.login = login;
@@ -18,7 +22,26 @@ public class Member {
 	public boolean checkPassword(String password) {
 		return this.password.equals(password);
 	}
-
+	
+	public Review getExistingReview(Item item) {
+		for (Iterator<Review> it = reviews.iterator(); it.hasNext();) {
+			Review review = (Review) it.next();
+			if (review.getItem().equals(item)) {
+				return review;
+			}
+		}
+		return null;
+	}
+	
+	public void addReview(Review review) {
+		reviews.add(review);
+	}
+	
+	public void modifyReview(Review review, float mark, String comment) {
+		review.setComment(comment);
+		review.setMark(mark);
+	}
+	
 	@Override
 	public String toString() {
 		return this.login + " " + this.password + " : " + this.profile;
