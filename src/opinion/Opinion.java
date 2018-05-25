@@ -13,4 +13,13 @@ public class Opinion {
 	public float getMark() {
 		return mark;
 	}
+	
+	public Member getAuthor() {
+		return author;
+	}
+	
+	public void modifyOpinion(float mark, Member author) {
+		this.mark = mark;
+		this.author = author;
+	}
 }

@@ -43,6 +43,21 @@ public class Review {
 		return item;
 	}
 
+	/**
+	 * 
+	 * @param member
+	 * @return
+	 */
+	public Opinion getExistingOpinion(Member member) {
+		for (Iterator<Opinion> iterator = opinions.iterator(); iterator.hasNext();) {
+			Opinion opinion = (Opinion) iterator.next();
+			if (member.isEquals(opinion.getAuthor().getLogin())) {
+				return opinion;
+			}
+		}
+		return null;
+	}
+	
 	public String toString() {
 		return "mark : " + mark + "; comment : " + comment + "; membre : " + member;
 	}
