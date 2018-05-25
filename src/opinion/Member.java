@@ -12,6 +12,7 @@ public class Member {
 	private String password;
 	private String profile;
 	private ArrayList<Review> reviews = new ArrayList<Review>();
+	private float karma = (float) 2.5;
 
 	public Member(String login, String password, String profile) {
 		this.login = login;
@@ -27,10 +28,9 @@ public class Member {
 		for (Iterator<Review> it = reviews.iterator(); it.hasNext();) {
 			Review review = (Review) it.next();
 			if (review.getItem().getTitle() == item.getTitle()) {
-				if(review.getItem() instanceof Book && item instanceof Book) {
+				if (review.getItem() instanceof Book && item instanceof Book) {
 					return review;
-				}
-				else if (review.getItem() instanceof Film && item instanceof Film) {
+				} else if (review.getItem() instanceof Film && item instanceof Film) {
 					return review;
 				}
 			}
@@ -58,5 +58,18 @@ public class Member {
 
 	public String getLogin() {
 		return login;
+	}
+
+	public void updateKarma() {
+		float sum = 0;
+		for (Iterator<Review> iterator = reviews.iterator(); iterator.hasNext();) {
+			Review review = (Review) iterator.next();
+			sum += review.getOpinionMean();
+		}
+		this.karma = sum / reviews.size();
+	}
+
+	public float getKarma() {
+		return karma;
 	}
 }

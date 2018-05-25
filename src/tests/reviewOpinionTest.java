@@ -17,7 +17,7 @@ import opinion.SocialNetwork;
 public class reviewOpinionTest {
 
 	private static int reviewOpinionBadEntryTest(ISocialNetworkPremium sn, String login, String password,
-			String reviewAuthor, String title, Itemtype itemtype, int mark, String testId, String errorMessage) {
+			String reviewAuthor, String title, Itemtype itemtype, float mark, String testId, String errorMessage) {
 		try {
 			sn.reviewOpinion(login, password, reviewAuthor, title, itemtype, mark);
 			System.out.println("Err " + testId + " : " + errorMessage);
@@ -32,7 +32,7 @@ public class reviewOpinionTest {
 	}
 
 	private static int reviewOpinionNotMemberExceptionTest(ISocialNetworkPremium sn, String login, String password,
-			String reviewAuthor, String title, Itemtype itemtype, int mark, String testId, String errorMessage) {
+			String reviewAuthor, String title, Itemtype itemtype, float mark, String testId, String errorMessage) {
 		try {
 			sn.reviewOpinion(login, password, reviewAuthor, title, itemtype, mark);
 			System.out.println("Err " + testId + " : " + errorMessage);
@@ -47,7 +47,7 @@ public class reviewOpinionTest {
 	}
 
 	private static int reviewOpinionNotItemExceptionTest(ISocialNetworkPremium sn, String login, String password,
-			String reviewAuthor, String title, Itemtype itemtype, int mark, String testId, String errorMessage) {
+			String reviewAuthor, String title, Itemtype itemtype, float mark, String testId, String errorMessage) {
 		try {
 			sn.reviewOpinion(login, password, reviewAuthor, title, itemtype, mark);
 			System.out.println("Err " + testId + " : " + errorMessage);
@@ -62,7 +62,7 @@ public class reviewOpinionTest {
 	}
 
 	private static int reviewOpinionNotReviewExceptionTest(ISocialNetworkPremium sn, String login, String password,
-			String reviewAuthor, String title, Itemtype itemtype, int mark, String testId, String errorMessage) {
+			String reviewAuthor, String title, Itemtype itemtype, float mark, String testId, String errorMessage) {
 		try {
 			sn.reviewOpinion(login, password, reviewAuthor, title, itemtype, mark);
 			System.out.println("Err " + testId + " : " + errorMessage);
@@ -77,7 +77,7 @@ public class reviewOpinionTest {
 	}
 
 	private static int reviewOpinionOKTest(ISocialNetworkPremium sn, String login, String password, String reviewAuthor,
-			String title, Itemtype itemtype, int mark, String testId) {
+			String title, Itemtype itemtype, float mark, String testId) {
 		try {
 			sn.reviewOpinion(login, password, reviewAuthor, title, itemtype, mark);
 			return 0;

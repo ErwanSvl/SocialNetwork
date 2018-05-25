@@ -431,7 +431,7 @@ public class SocialNetwork implements ISocialNetworkPremium {
 
 	@Override
 	public void reviewOpinion(String login, String password, String reviewAuthorLogin, String title, Itemtype itemtype,
-			int mark) throws BadEntryException, NotMemberException, NotItemException, NotReviewException {
+			float mark) throws BadEntryException, NotMemberException, NotItemException, NotReviewException {
 		testOpinonParameters(title, itemtype, mark);
 		Member member = testMemberCorrect(login, password);
 		Member reviewAuthor = testReviewAuthorExist(reviewAuthorLogin);
@@ -441,7 +441,6 @@ public class SocialNetwork implements ISocialNetworkPremium {
 		Item item = testItemExist(title, itemtype);
 		Review review = testReviewExist(item, reviewAuthor);
 		review.addOpinion(member, mark);
-		
 	}
 
 }

@@ -2,11 +2,15 @@ package opinion;
 
 public class Opinion {
 	
-	private int mark;
+	private float mark;
 	private Member author;
 	
-	public Opinion(Member member, int mark) {
+	public Opinion(Member member, float mark) {
 		this.author = member;
 		this.mark = mark;
+	}
+	
+	public float getMark() {
+		return mark;
 	}
 }

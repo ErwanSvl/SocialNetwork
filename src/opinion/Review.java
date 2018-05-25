@@ -5,6 +5,7 @@
 package opinion;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Review {
 
@@ -20,19 +21,20 @@ public class Review {
 		this.member = member;
 		this.item = item;
 	}
-	
-	public void addOpinion(Member member, int mark) {
+
+	public void addOpinion(Member member, float mark) {
 		opinions.add(new Opinion(member, mark));
+		member.updateKarma();
 	}
 
 	public float getMark() {
 		return mark;
 	}
-	
+
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	
+
 	public void setMark(float mark) {
 		this.mark = mark;
 	}
@@ -40,8 +42,17 @@ public class Review {
 	public Item getItem() {
 		return item;
 	}
-	
+
 	public String toString() {
 		return "mark : " + mark + "; comment : " + comment + "; membre : " + member;
+	}
+
+	public float getOpinionMean() {
+		float sum = 0;
+		for (Iterator<Opinion> iterator = opinions.iterator(); iterator.hasNext();) {
+			Opinion opinion = (Opinion) iterator.next();
+			sum += opinion.getMark();
+		}
+		return sum / opinions.size();
 	}
 }
