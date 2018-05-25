@@ -97,7 +97,7 @@ public class SocialNetwork implements ISocialNetworkPremium {
 	private Review testReviewExist(Item item, Member member) throws NotReviewException {
 		Review review = member.getExistingReview(item);
 		if(review == null) {
-			throw new NotReviewException("This member doesn't leave a review on this item");
+			throw new NotReviewException("The member " + member.getLogin() + " doesn't leave a review on the item " + item.getTitle());
 		}
 		return review;
 	}
@@ -271,11 +271,8 @@ public class SocialNetwork implements ISocialNetworkPremium {
 		}
 	}
 
-	private void testOpinonParameters(String reviewAuthor, String title, Itemtype itemtype, float mark)
-			throws BadEntryException, NotMemberException {
-		if (reviewAuthor == null || reviewAuthor.trim().length() == 0) {
-			throw new BadEntryException("The format of the author of the review is not correct");
-		}
+	private void testOpinonParameters(String title, Itemtype itemtype, float mark)
+			throws BadEntryException {
 		if (title == null || title.trim().length() == 0) {
 			throw new BadEntryException("Title must be instantiate and contains at least one non-space character");
 		}
@@ -285,9 +282,19 @@ public class SocialNetwork implements ISocialNetworkPremium {
 		if (mark < 0 || mark > 5) {
 			throw new BadEntryException("mark must be between 0 and 5");
 		}
-		if (!isMemberLoginExist(reviewAuthor)) {
-			throw new NotMemberException("The author of the review selected doesn't exist");
+	}
+	
+	private Member testReviewAuthorExist(String ReviewAuthorLogin) throws BadEntryException, NotMemberException{
+		if(ReviewAuthorLogin == null || ReviewAuthorLogin.trim().length() == 0) {
+			throw new BadEntryException("Login must be instantiate and contains at least one non-space character");
 		}
+		for (Iterator<Member> it = members.iterator(); it.hasNext();) {
+			Member member = (Member) it.next();
+			if(member.isEquals(ReviewAuthorLogin)) {
+				return member;
+			}
+		}
+		throw new NotMemberException("The member " + ReviewAuthorLogin + "does not exist");
 	}
 
 	/**
@@ -372,7 +379,13 @@ public class SocialNetwork implements ISocialNetworkPremium {
 		testReviewParameters(title, mark, comment);
 		Item item = testItemExist(title, Itemtype.BOOK);
 		Member member = testMemberCorrect(login, password);
-		item.addReview(new Review(mark, comment, member, item));
+		Review review = member.getExistingReview(item);
+		if (review != null) {
+			member.modifyReview(review, mark, comment);
+		} else {
+			item.addReview(new Review(mark, comment, member, item));
+			member.addReview(new Review(mark, comment, member, item));
+		}
 		return item.getMean();
 	}
 
@@ -417,15 +430,16 @@ public class SocialNetwork implements ISocialNetworkPremium {
 	}
 
 	@Override
-	public void reviewOpinion(String login, String password, String reviewAuthor, String title, Itemtype itemtype,
+	public void reviewOpinion(String login, String password, String reviewAuthorLogin, String title, Itemtype itemtype,
 			int mark) throws BadEntryException, NotMemberException, NotItemException, NotReviewException {
-		testOpinonParameters(reviewAuthor, title, itemtype, mark);
-		if (login.equalsIgnoreCase(reviewAuthor.trim())) {
+		testOpinonParameters(title, itemtype, mark);
+		Member member = testMemberCorrect(login, password);
+		Member reviewAuthor = testReviewAuthorExist(reviewAuthorLogin);
+		if (login.equalsIgnoreCase(reviewAuthorLogin.trim())) {
 			throw new NotReviewException("A member can't leave an opinion on his own review");
 		}
-		Member member = testMemberCorrect(login, password);
 		Item item = testItemExist(title, itemtype);
-		Review review = testReviewExist(item, member);
+		Review review = testReviewExist(item, reviewAuthor);
 		review.addOpinion(member, mark);
 		
 	}

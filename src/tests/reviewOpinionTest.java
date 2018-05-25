@@ -16,8 +16,8 @@ import opinion.SocialNetwork;
 
 public class reviewOpinionTest {
 
-	private static int reviewOpinionBadEntryTest(ISocialNetworkPremium sn, String login, String reviewAuthor,
-			String password, String title, Itemtype itemtype, int mark, String testId, String errorMessage) {
+	private static int reviewOpinionBadEntryTest(ISocialNetworkPremium sn, String login, String password,
+			String reviewAuthor, String title, Itemtype itemtype, int mark, String testId, String errorMessage) {
 		try {
 			sn.reviewOpinion(login, password, reviewAuthor, title, itemtype, mark);
 			System.out.println("Err " + testId + " : " + errorMessage);
@@ -192,25 +192,25 @@ public class reviewOpinionTest {
 
 		// Tests NotMemberException
 		nbTests++;
-		nbErrors += reviewOpinionNotMemberExceptionTest(sn, "Erwan", "1234", "kthezelais", "Dune", Itemtype.BOOK, -1,
+		nbErrors += reviewOpinionNotMemberExceptionTest(sn, "Erwan", "1234", "kthezelais", "Dune", Itemtype.BOOK, 3,
 				"y.1", "reviewOpinion() doesn't reject a bad login");
 
 		nbTests++;
-		nbErrors += reviewOpinionNotMemberExceptionTest(sn, "esevellec", "1234", "Killian", "Dune", Itemtype.BOOK, -1,
+		nbErrors += reviewOpinionNotMemberExceptionTest(sn, "esevellec", "1234", "Killian", "Dune", Itemtype.BOOK, 3,
 				"y.1", "reviewOpinion() doesn't reject a bad login");
 
 		nbTests++;
 		nbErrors += reviewOpinionNotMemberExceptionTest(sn, "esevellec", "12345", "kthezelais", "Dune", Itemtype.BOOK,
-				-1, "y.2", "reviewOpinion() doesn't reject a bad password");
+				3, "y.2", "reviewOpinion() doesn't reject a bad password");
 
 		// Tests NotItemException
 		nbTests++;
 		nbErrors += reviewOpinionNotItemExceptionTest(sn, "esevellec", "1234", "kthezelais", "Lord of the Rings",
-				Itemtype.BOOK, -1, "y.3", "reviewOpinion() doesn't reject a non existing book title");
+				Itemtype.BOOK, 3, "y.3", "reviewOpinion() doesn't reject a non existing book title");
 
 		nbTests++;
 		nbErrors += reviewOpinionNotItemExceptionTest(sn, "esevellec", "1234", "kthezelais",
-				"Alice's Adventures in Wonderland", Itemtype.FILM, -1, "y.4",
+				"Alice's Adventures in Wonderland", Itemtype.FILM, 3, "y.4",
 				"reviewOpinion() doesn't reject a non existing film title if a book have the same title");
 
 		// Tests NotReviewException
