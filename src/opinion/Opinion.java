@@ -9,4 +9,14 @@ public class Opinion {
 		this.author = member;
 		this.mark = mark;
 	}
+
+	public Member getAuthor() {
+		return author;
+	}
+	
+	public void modifyOpinion(float mark, Member author) {
+		this.mark = mark;
+		this.author = author;
+	}
+
 }

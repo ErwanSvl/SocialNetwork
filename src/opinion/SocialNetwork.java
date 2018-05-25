@@ -440,7 +440,12 @@ public class SocialNetwork implements ISocialNetworkPremium {
 		}
 		Item item = testItemExist(title, itemtype);
 		Review review = testReviewExist(item, reviewAuthor);
-		review.addOpinion(member, mark);
+		Opinion existingOpinion = review.getExistingOpinion(member);
+		if (existingOpinion != null) {
+			existingOpinion.modifyOpinion(member, mark);
+		} else {
+			review.addOpinion(member, mark);
+		}
 		
 	}
 
