@@ -4,18 +4,25 @@
  */
 package opinion;
 
+import java.util.ArrayList;
+
 public class Review {
 
 	private float mark;
 	private String comment;
 	private Member member;
 	private Item item;
+	private ArrayList<Opinion> opinions = new ArrayList<Opinion>();
 
 	public Review(float mark, String comment, Member member, Item item) {
 		this.mark = mark;
 		this.comment = comment;
 		this.member = member;
 		this.item = item;
+	}
+	
+	public void addOpinion(Member member, int mark) {
+		opinions.add(new Opinion(member, mark));
 	}
 
 	public float getMark() {

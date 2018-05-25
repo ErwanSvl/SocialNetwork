@@ -94,6 +94,14 @@ public class SocialNetwork implements ISocialNetworkPremium {
 		}
 	}
 
+	private Review testReviewExist(Item item, Member member) throws NotReviewException {
+		Review review = member.getExistingReview(item);
+		if(review == null) {
+			throw new NotReviewException("This member doesn't leave a review on this item");
+		}
+		return review;
+	}
+
 	/**
 	 * Test if a member with the same login already exist in the
 	 * <i>SocialNetwork</i>
@@ -263,6 +271,25 @@ public class SocialNetwork implements ISocialNetworkPremium {
 		}
 	}
 
+	private void testOpinonParameters(String reviewAuthor, String title, Itemtype itemtype, float mark)
+			throws BadEntryException, NotMemberException {
+		if (reviewAuthor == null || reviewAuthor.trim().length() == 0) {
+			throw new BadEntryException("The format of the author of the review is not correct");
+		}
+		if (title == null || title.trim().length() == 0) {
+			throw new BadEntryException("Title must be instantiate and contains at least one non-space character");
+		}
+		if (itemtype == null) {
+			throw new BadEntryException("Itemtype must be instantiate");
+		}
+		if (mark < 0 || mark > 5) {
+			throw new BadEntryException("mark must be between 0 and 5");
+		}
+		if (!isMemberLoginExist(reviewAuthor)) {
+			throw new NotMemberException("The author of the review selected doesn't exist");
+		}
+	}
+
 	/**
 	 * return the number of member in the <i>SocialNetwork</i>
 	 */
@@ -330,7 +357,7 @@ public class SocialNetwork implements ISocialNetworkPremium {
 		Item item = testItemExist(title, Itemtype.FILM);
 		Member member = testMemberCorrect(login, password);
 		Review review = member.getExistingReview(item);
-		if (review!= null) {
+		if (review != null) {
 			member.modifyReview(review, mark, comment);
 		} else {
 			item.addReview(new Review(mark, comment, member, item));
@@ -388,11 +415,19 @@ public class SocialNetwork implements ISocialNetworkPremium {
 		}
 		return socialNetwork;
 	}
-	
+
 	@Override
-	public void reviewOpinion(String login, String password, String reviewAuthor, String title, Itemtype itemtype, float mark)
-			throws BadEntryException, NotMemberException, NotItemException, NotReviewException {
-		// TODO Auto-generated method stub
+	public void reviewOpinion(String login, String password, String reviewAuthor, String title, Itemtype itemtype,
+			int mark) throws BadEntryException, NotMemberException, NotItemException, NotReviewException {
+		testOpinonParameters(reviewAuthor, title, itemtype, mark);
+		if (login.equalsIgnoreCase(reviewAuthor.trim())) {
+			throw new NotReviewException("A member can't leave an opinion on his own review");
+		}
+		Member member = testMemberCorrect(login, password);
+		Item item = testItemExist(title, itemtype);
+		Review review = testReviewExist(item, member);
+		review.addOpinion(member, mark);
+		
 	}
 
 }

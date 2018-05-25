@@ -1,9 +1,15 @@
+/**
+ * @author Erwan SEVELLEC
+ * @author Killian THEZELAIS
+ */
+
 package tests;
 
 import exceptions.BadEntryException;
 import exceptions.NotItemException;
 import exceptions.NotMemberException;
 import exceptions.NotReviewException;
+import exceptions.NotTestReportException;
 import opinion.ISocialNetworkPremium;
 import opinion.ISocialNetworkPremium.Itemtype;
 import opinion.SocialNetwork;
@@ -11,7 +17,7 @@ import opinion.SocialNetwork;
 public class reviewOpinionTest {
 
 	private static int reviewOpinionBadEntryTest(ISocialNetworkPremium sn, String login, String reviewAuthor,
-			String password, String title, Itemtype itemtype, float mark, String testId, String errorMessage) {
+			String password, String title, Itemtype itemtype, int mark, String testId, String errorMessage) {
 		try {
 			sn.reviewOpinion(login, password, reviewAuthor, title, itemtype, mark);
 			System.out.println("Err " + testId + " : " + errorMessage);
@@ -26,7 +32,7 @@ public class reviewOpinionTest {
 	}
 
 	private static int reviewOpinionNotMemberExceptionTest(ISocialNetworkPremium sn, String login, String password,
-			String reviewAuthor, String title, Itemtype itemtype, float mark, String testId, String errorMessage) {
+			String reviewAuthor, String title, Itemtype itemtype, int mark, String testId, String errorMessage) {
 		try {
 			sn.reviewOpinion(login, password, reviewAuthor, title, itemtype, mark);
 			System.out.println("Err " + testId + " : " + errorMessage);
@@ -41,7 +47,7 @@ public class reviewOpinionTest {
 	}
 
 	private static int reviewOpinionNotItemExceptionTest(ISocialNetworkPremium sn, String login, String password,
-			String reviewAuthor, String title, Itemtype itemtype, float mark, String testId, String errorMessage) {
+			String reviewAuthor, String title, Itemtype itemtype, int mark, String testId, String errorMessage) {
 		try {
 			sn.reviewOpinion(login, password, reviewAuthor, title, itemtype, mark);
 			System.out.println("Err " + testId + " : " + errorMessage);
@@ -56,7 +62,7 @@ public class reviewOpinionTest {
 	}
 
 	private static int reviewOpinionNotReviewExceptionTest(ISocialNetworkPremium sn, String login, String password,
-			String reviewAuthor, String title, Itemtype itemtype, float mark, String testId, String errorMessage) {
+			String reviewAuthor, String title, Itemtype itemtype, int mark, String testId, String errorMessage) {
 		try {
 			sn.reviewOpinion(login, password, reviewAuthor, title, itemtype, mark);
 			System.out.println("Err " + testId + " : " + errorMessage);
@@ -71,7 +77,7 @@ public class reviewOpinionTest {
 	}
 
 	private static int reviewOpinionOKTest(ISocialNetworkPremium sn, String login, String password, String reviewAuthor,
-			String title, Itemtype itemtype, float mark, String testId, String errorMessage) {
+			String title, Itemtype itemtype, int mark, String testId) {
 		try {
 			sn.reviewOpinion(login, password, reviewAuthor, title, itemtype, mark);
 			return 0;
@@ -115,7 +121,7 @@ public class reviewOpinionTest {
 		// add reviews for books
 		try {
 			sn.reviewItemBook("esevellec", "1234", "Dune", 4, "Great book!");
-			sn.reviewItemFilm("kthezelais", "1234", "Dune", 3, "I hate science fiction");
+			sn.reviewItemBook("kthezelais", "1234", "Dune", 3, "I hate science fiction");
 		} catch (Exception e) {
 			System.out.println("reviewItemBook() throw an exception");
 			e.printStackTrace();
@@ -129,8 +135,14 @@ public class reviewOpinionTest {
 			e.printStackTrace();
 		}
 
+		// save the state of the socialNetwork
+		int nbBooks = sn.nbBooks();
+		int nbFilms = sn.nbFilms();
+		int nbMembers = sn.nbMembers();
+
 		// Test n°x
 
+		// Tests for BadEntryException
 		nbTests++;
 		nbErrors += reviewOpinionBadEntryTest(sn, null, "1234", "kthezelais", "Dune", Itemtype.BOOK, 5, "x.1",
 				"reviewOpinion() doesn't reject null logins");
@@ -178,6 +190,7 @@ public class reviewOpinionTest {
 
 		// Test n°y
 
+		// Tests NotMemberException
 		nbTests++;
 		nbErrors += reviewOpinionNotMemberExceptionTest(sn, "Erwan", "1234", "kthezelais", "Dune", Itemtype.BOOK, -1,
 				"y.1", "reviewOpinion() doesn't reject a bad login");
@@ -190,6 +203,7 @@ public class reviewOpinionTest {
 		nbErrors += reviewOpinionNotMemberExceptionTest(sn, "esevellec", "12345", "kthezelais", "Dune", Itemtype.BOOK,
 				-1, "y.2", "reviewOpinion() doesn't reject a bad password");
 
+		// Tests NotItemException
 		nbTests++;
 		nbErrors += reviewOpinionNotItemExceptionTest(sn, "esevellec", "1234", "kthezelais", "Lord of the Rings",
 				Itemtype.BOOK, -1, "y.3", "reviewOpinion() doesn't reject a non existing book title");
@@ -199,9 +213,48 @@ public class reviewOpinionTest {
 				"Alice's Adventures in Wonderland", Itemtype.FILM, -1, "y.4",
 				"reviewOpinion() doesn't reject a non existing film title if a book have the same title");
 
+		// Tests NotReviewException
 		nbTests++;
-		nbErrors += reviewOpinionNotReviewExceptionTest(sn, "esevellec", "1234", "kthezelais", "Dune", Itemtype.FILM, 5,
-				"y.3", "reviewOpinion() doesn't reject a non existing book title");
+		nbErrors += reviewOpinionNotReviewExceptionTest(sn, "esevellec", "1234", "kthezelais",
+				"Alice's Adventures in Wonderland", Itemtype.BOOK, 5, "y.5",
+				"reviewOpinion() doesn't reject a non existing review");
+
+		// A user can't give an opinion on his own
+		nbTests++;
+		nbErrors += reviewOpinionNotReviewExceptionTest(sn, "esevellec", "1234", "esevellec", "Dune", Itemtype.BOOK, 5,
+				"y.6", "reviewOpinion() doesn't reject a opinion on the own");
+
+		// Normals cases
+		nbTests++;
+		nbErrors += reviewOpinionOKTest(sn, "esevellec", "1234", "kthezelais", "Dune", Itemtype.BOOK, 2, "y.7");
+
+		// test if the state of the system change
+		nbTests++;
+		if (nbMembers != sn.nbMembers()) {
+			System.out.println("Error : the number of members was unexepectedly chaged by reviewOpinion()");
+		}
+
+		nbTests++;
+		if (nbBooks != sn.nbBooks()) {
+			System.out.println("Error : the number of books was unexepectedly chaged by review reviewOpinion()");
+		}
+
+		nbTests++;
+		if (nbFilms != sn.nbFilms()) {
+			System.out.println("Error : the number of films was unexepectedly chaged by review reviewOpinion()");
+		}
+
+		// Display final state of 'sn'
+		System.out.println("Final state of the social network : " + sn);
+
+		try {
+			TestReport tr = new TestReport(nbTests, nbErrors);
+			System.out.println("reviewOpinion : " + tr);
+			return tr;
+		} catch (NotTestReportException e) {
+			System.out.println("Unexpected error in reviewOpinionTest test code - Can't return valuable test results");
+			return null;
+		}
 	}
 
 	public static void main(String[] args) {

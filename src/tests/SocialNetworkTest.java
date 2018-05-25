@@ -45,6 +45,10 @@ public class SocialNetworkTest {
 			tr = consultItemsTest.test();
 			testSuiteReport.add(tr);
 			System.out.println("\n\n **********************************************************************************************\n");
+			//
+			tr = reviewOpinionTest.test();
+			testSuiteReport.add(tr);
+			System.out.println("\n\n **********************************************************************************************\n");
 			// End of the test suite : give some feedback to the tester
 			System.out.println("Global tests results :   \n" + testSuiteReport);
 		}

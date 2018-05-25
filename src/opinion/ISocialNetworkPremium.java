@@ -30,6 +30,6 @@ public interface ISocialNetworkPremium extends ISocialNetwork {
 	 * @throws NotItemException
 	 * @throws NotReviewException
 	 */
-	public void reviewOpinion(String login, String password, String reviewAuthor, String title, Itemtype itemtype, float mark)
+	public void reviewOpinion(String login, String password, String reviewAuthor, String title, Itemtype itemtype, int mark)
 			throws BadEntryException, NotMemberException, NotItemException, NotReviewException;
 }
