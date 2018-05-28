@@ -20,6 +20,11 @@ public abstract class Item {
 		this.kind = kind;
 	}
 
+	/**
+	 * 
+	 * @param review
+	 *            the review to add in the ArrayList review
+	 */
 	public void addReview(Review review) {
 		reviews.add(review);
 	}
@@ -44,6 +49,10 @@ public abstract class Item {
 		return title;
 	}
 
+	/**
+	 * 
+	 * @return return the global mean of all reviews on the item, 0 if no review
+	 */
 	public float getMean() {
 		if (reviews.size() == 0)
 			return 0;

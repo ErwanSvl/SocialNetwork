@@ -23,10 +23,24 @@ public class Member {
 		this.profile = profile;
 	}
 
+	/**
+	 * Test the member's password
+	 * 
+	 * @param password
+	 *            the password of the member
+	 * @return return a boolean true if the password is right
+	 */
 	public boolean checkPassword(String password) {
 		return this.password.equals(password);
 	}
 
+	/**
+	 * Test if a review already exist
+	 * 
+	 * @param item
+	 *            the item of the review
+	 * @return the review if its exist
+	 */
 	public Review getExistingReview(Item item) {
 		for (Iterator<Review> it = reviews.iterator(); it.hasNext();) {
 			Review review = (Review) it.next();
@@ -40,7 +54,12 @@ public class Member {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * add a new reviews
+	 * 
+	 * @param review the review to add
+	 */
 	public void addReview(Review review) {
 		reviews.add(review);
 	}
@@ -50,6 +69,13 @@ public class Member {
 		return this.login + " " + this.password + " : " + this.profile + ". Karma : " + karma;
 	}
 
+	/**
+	 * Test if the login match with a login member
+	 * 
+	 * @param login
+	 *            the tested login
+	 * @return True if the login is equals
+	 */
 	public boolean isEquals(String login) {
 		return this.login.trim().equalsIgnoreCase(login.trim());
 	}
