@@ -21,4 +21,6 @@ public class Book extends Item {
 		book += "   L'auteur du livre est " + this.author + " et il contient " + this.nbPages + " pages";
 		return book;
 	}
+	
+	//No test main, only a constructor
 }

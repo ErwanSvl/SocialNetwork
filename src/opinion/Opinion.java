@@ -1,3 +1,7 @@
+/**
+ * @author Erwan SEVELLEC
+ * @author Killian THEZELAIS
+ */
 package opinion;
 
 public class Opinion {
@@ -18,8 +22,14 @@ public class Opinion {
 		return author;
 	}
 	
-	public void modifyOpinion(float mark, Member author) {
+	public void setMark(float mark) {
 		this.mark = mark;
-		this.author = author;
 	}
+	
+	@Override
+	public String toString() {
+		return author + " : " + mark;
+	}
+	
+	//No test main, only getters and setters
 }

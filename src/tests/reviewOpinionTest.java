@@ -10,8 +10,13 @@ import exceptions.NotItemException;
 import exceptions.NotMemberException;
 import exceptions.NotReviewException;
 import exceptions.NotTestReportException;
+import opinion.Book;
 import opinion.ISocialNetworkPremium;
 import opinion.ISocialNetworkPremium.Itemtype;
+import opinion.Item;
+import opinion.Member;
+import opinion.Opinion;
+import opinion.Review;
 import opinion.SocialNetwork;
 
 public class reviewOpinionTest {
@@ -219,7 +224,7 @@ public class reviewOpinionTest {
 				"Alice's Adventures in Wonderland", Itemtype.BOOK, 5, "y.5",
 				"reviewOpinion() doesn't reject a non existing review");
 
-		// A user can't give an opinion on his own
+		// A user can't give an opinion on his own review
 		nbTests++;
 		nbErrors += reviewOpinionNotReviewExceptionTest(sn, "esevellec", "1234", "esevellec", "Dune", Itemtype.BOOK, 5,
 				"y.6", "reviewOpinion() doesn't reject a opinion on the own");
@@ -227,6 +232,7 @@ public class reviewOpinionTest {
 		// Normals cases
 		nbTests++;
 		nbErrors += reviewOpinionOKTest(sn, "esevellec", "1234", "kthezelais", "Dune", Itemtype.BOOK, 2, "y.7");
+
 
 		// test if the state of the system change
 		nbTests++;

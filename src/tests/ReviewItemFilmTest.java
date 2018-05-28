@@ -9,7 +9,9 @@ import exceptions.NotItemException;
 import exceptions.NotMemberException;
 import exceptions.NotTestReportException;
 import opinion.ISocialNetwork;
+import opinion.ISocialNetworkPremium;
 import opinion.SocialNetwork;
+import opinion.ISocialNetworkPremium.Itemtype;
 
 public class ReviewItemFilmTest {
 
@@ -80,7 +82,7 @@ public class ReviewItemFilmTest {
 		int nbTests = 0;
 		int nbErrors = 0;
 
-		ISocialNetwork sn = new SocialNetwork();
+		ISocialNetworkPremium sn = new SocialNetwork();
 		try {
 			sn.addMember("esevellec", "1234", "Beginner reader");
 			sn.addMember("kthezelais", "1234", "Confirmed reader");
@@ -154,8 +156,8 @@ public class ReviewItemFilmTest {
 				3, "Great Film!", "9.2", "reviewItemFilm() doesn't reject a bad password");
 
 		nbTests++;
-		nbErrors += reviewItemFilmNotItemExceptionTest(sn, "esevellec", "1234", "Dune", 3,
-				"Great Film!", "9.3", "reviewItemFilm() doesn't reject a non existing film title");
+		nbErrors += reviewItemFilmNotItemExceptionTest(sn, "esevellec", "1234", "Dune", 3, "Great Film!", "9.3",
+				"reviewItemFilm() doesn't reject a non existing film title");
 
 		nbTests++;
 		nbErrors += reviewItemFilmOKTest(sn, "esevellec", "1234", "Star Wars: Episode IV – A New Hope", 0,
@@ -164,6 +166,20 @@ public class ReviewItemFilmTest {
 		nbTests++;
 		nbErrors += reviewItemFilmOKTest(sn, "kthezelais", "1234", "Star Wars: Episode IV – A New Hope", 5,
 				"May the force be with you", (float) 2.5, "9.5");
+
+		// Test n�x (lot 2)
+		try {
+			sn.reviewOpinion("esevellec", "1234", "kthezelais", "Star Wars: Episode IV – A New Hope", Itemtype.FILM, 1);
+		} catch (Exception e) {
+			System.out.println("Err : error when adding an opinion");
+			e.printStackTrace();
+		}
+		
+		// Test if the member's karma change the mean of the item
+
+		nbTests++;
+		nbErrors += reviewItemFilmOKTest(sn, "kthezelais", "1234", "Star Wars: Episode IV – A New Hope", 5,
+				"May the force be with you", (float) 1.43, "6.5"); // mean (2.5 * 0 + 1.0 * 5) / 3.5
 
 		nbTests++;
 		if (nbFilms != sn.nbFilms()) {

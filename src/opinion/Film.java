@@ -24,4 +24,6 @@ public class Film extends Item {
 				+ this.duration + " minutes.";
 		return book;
 	}
+	
+	//No test main only a constructor
 }

@@ -24,7 +24,7 @@ public class SocialNetwork implements ISocialNetworkPremium {
 	private ArrayList<Item> items = new ArrayList<Item>();
 
 	/**
-	 * Test if a Item with the same type and the same title exist
+	 * Test if an item with the same type and the same title exist
 	 * 
 	 * @param title
 	 * @param itemtype
@@ -94,10 +94,18 @@ public class SocialNetwork implements ISocialNetworkPremium {
 		}
 	}
 
+	/**
+	 * Test if a review exist for this item from this member
+	 * @param item 
+	 * @param member
+	 * @return The review for this item from this member
+	 * @throws NotReviewException If the review does not exist
+	 */
 	private Review testReviewExist(Item item, Member member) throws NotReviewException {
 		Review review = member.getExistingReview(item);
-		if(review == null) {
-			throw new NotReviewException("The member " + member.getLogin() + " doesn't leave a review on the item " + item.getTitle());
+		if (review == null) {
+			throw new NotReviewException(
+					"The member " + member.getLogin() + " doesn't leave a review on the item " + item.getTitle());
 		}
 		return review;
 	}
@@ -155,7 +163,6 @@ public class SocialNetwork implements ISocialNetworkPremium {
 			if (member.getLogin().equalsIgnoreCase(login.trim())) {
 				if (!member.checkPassword(password))
 					throw new NotMemberException("Password is not correct for this member");
-
 				else
 					return member;
 			}
@@ -271,8 +278,14 @@ public class SocialNetwork implements ISocialNetworkPremium {
 		}
 	}
 
-	private void testOpinonParameters(String title, Itemtype itemtype, float mark)
-			throws BadEntryException {
+	/**
+	 * Test if the parameters for an opinions are correct
+	 * @param title
+	 * @param itemtype
+	 * @param mark
+	 * @throws BadEntryException
+	 */
+	private void testOpinonParameters(String title, Itemtype itemtype, float mark) throws BadEntryException {
 		if (title == null || title.trim().length() == 0) {
 			throw new BadEntryException("Title must be instantiate and contains at least one non-space character");
 		}
@@ -283,14 +296,21 @@ public class SocialNetwork implements ISocialNetworkPremium {
 			throw new BadEntryException("mark must be between 0 and 5");
 		}
 	}
-	
-	private Member testReviewAuthorExist(String ReviewAuthorLogin) throws BadEntryException, NotMemberException{
-		if(ReviewAuthorLogin == null || ReviewAuthorLogin.trim().length() == 0) {
+
+	/**
+	 * Test if this is a correct login and if it comes from an existing member
+	 * @param ReviewAuthorLogin
+	 * @return the member with this login
+	 * @throws BadEntryException
+	 * @throws NotMemberException
+	 */
+	private Member testReviewAuthorExist(String ReviewAuthorLogin) throws BadEntryException, NotMemberException {
+		if (ReviewAuthorLogin == null || ReviewAuthorLogin.trim().length() == 0) {
 			throw new BadEntryException("Login must be instantiate and contains at least one non-space character");
 		}
 		for (Iterator<Member> it = members.iterator(); it.hasNext();) {
 			Member member = (Member) it.next();
-			if(member.isEquals(ReviewAuthorLogin)) {
+			if (member.isEquals(ReviewAuthorLogin)) {
 				return member;
 			}
 		}
@@ -365,7 +385,8 @@ public class SocialNetwork implements ISocialNetworkPremium {
 		Member member = testMemberCorrect(login, password);
 		Review review = member.getExistingReview(item);
 		if (review != null) {
-			member.modifyReview(review, mark, comment);
+			review.setComment(comment);
+			review.setMark(mark);
 		} else {
 			item.addReview(new Review(mark, comment, member, item));
 			member.addReview(new Review(mark, comment, member, item));
@@ -381,7 +402,8 @@ public class SocialNetwork implements ISocialNetworkPremium {
 		Member member = testMemberCorrect(login, password);
 		Review review = member.getExistingReview(item);
 		if (review != null) {
-			member.modifyReview(review, mark, comment);
+			review.setMark(mark);
+			review.setComment(comment);
 		} else {
 			item.addReview(new Review(mark, comment, member, item));
 			member.addReview(new Review(mark, comment, member, item));
@@ -440,12 +462,7 @@ public class SocialNetwork implements ISocialNetworkPremium {
 		}
 		Item item = testItemExist(title, itemtype);
 		Review review = testReviewExist(item, reviewAuthor);
-		Opinion existingOpinion = review.getExistingOpinion(member);
-		if (existingOpinion != null) {
-			existingOpinion.modifyOpinion(mark, member);
-		} else {
-			review.addOpinion(member, mark);
-		}
+		review.addOpinion(member, mark);
 	}
 
 }

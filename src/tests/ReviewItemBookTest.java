@@ -9,6 +9,8 @@ import exceptions.NotItemException;
 import exceptions.NotMemberException;
 import exceptions.NotTestReportException;
 import opinion.ISocialNetwork;
+import opinion.ISocialNetworkPremium;
+import opinion.ISocialNetworkPremium.Itemtype;
 import opinion.SocialNetwork;
 
 public class ReviewItemBookTest {
@@ -80,7 +82,7 @@ public class ReviewItemBookTest {
 		int nbTests = 0;
 		int nbErrors = 0;
 
-		ISocialNetwork sn = new SocialNetwork();
+		ISocialNetworkPremium sn = new SocialNetwork();
 		try {
 			sn.addMember("esevellec", "1234", "Beginner reader");
 			sn.addMember("kthezelais", "1234", "Confirmed reader");
@@ -163,6 +165,20 @@ public class ReviewItemBookTest {
 		nbTests++;
 		nbErrors += reviewItemBookOKTest(sn, "kthezelais", "1234", "Alice's Adventures in Wonderland", 5, "Great Book!",
 				(float) 2.5, "6.5");
+
+		// Test n�x (lot 2)
+		try {
+			sn.reviewOpinion("esevellec", "1234", "kthezelais", "Alice's Adventures in Wonderland", Itemtype.BOOK, 1);
+		} catch (Exception e) {
+			System.out.println("Err : error when adding an opinion");
+			e.printStackTrace();
+		}
+		
+		// Test if the member's karma change the mean of the item
+
+		nbTests++;
+		nbErrors += reviewItemBookOKTest(sn, "kthezelais", "1234", "Alice's Adventures in Wonderland", 5, "Great Book!",
+				(float) 1.43, "6.5"); // mean (2.5 * 0 + 1.0 * 5) / 3.5
 
 		nbTests++;
 		if (nbFilms != sn.nbFilms()) {
