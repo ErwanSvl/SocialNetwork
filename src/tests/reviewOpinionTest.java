@@ -10,13 +10,8 @@ import exceptions.NotItemException;
 import exceptions.NotMemberException;
 import exceptions.NotReviewException;
 import exceptions.NotTestReportException;
-import opinion.Book;
 import opinion.ISocialNetworkPremium;
 import opinion.ISocialNetworkPremium.Itemtype;
-import opinion.Item;
-import opinion.Member;
-import opinion.Opinion;
-import opinion.Review;
 import opinion.SocialNetwork;
 
 public class reviewOpinionTest {

@@ -97,6 +97,8 @@ public class Member {
 			sum += review.getOpinionMean() * nbOpinions;
 			nbOpinionsTotal += nbOpinions;
 		}
+		if(nbOpinionsTotal == 0)
+			this.karma = (float) 2.5;
 		this.karma = (float) Math.round((sum / nbOpinionsTotal) * 100) / 100; // Keep only 2 digit after comma
 	}
 
