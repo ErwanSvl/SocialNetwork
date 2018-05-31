@@ -1,3 +1,4 @@
 1. Se positionner dans le repertoire src du projet
 2. Compiler les fichiers java grace à la commande javac **/*.java
 3. Executer tous les tests avec la commande java tests.SocialNetworkTest 
+4. Générer la javadoc : javadoc -d ../javadoc/ * 
