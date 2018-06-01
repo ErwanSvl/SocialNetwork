@@ -2,11 +2,12 @@
  * @author Erwan SEVELLEC
  * @author Killian THEZELAIS
  */
-package opinion;
+package tests;
 
 import exceptions.NotTestReportException;
+import opinion.ISocialNetworkPremium;
 import opinion.ISocialNetworkPremium.Itemtype;
-import tests.TestReport;
+import opinion.SocialNetwork;
 
 public class EfficiencyTest {
 

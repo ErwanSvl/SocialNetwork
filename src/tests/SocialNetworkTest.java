@@ -1,6 +1,5 @@
 package tests;
 
-import opinion.EfficiencyTest;
 import opinion.Item;
 import opinion.Member;
 import opinion.Review;
