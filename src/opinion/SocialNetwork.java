@@ -388,8 +388,9 @@ public class SocialNetwork implements ISocialNetworkPremium {
 			review.setComment(comment);
 			review.setMark(mark);
 		} else {
-			item.addReview(new Review(mark, comment, member, item));
-			member.addReview(new Review(mark, comment, member, item));
+			Review newReview = new Review(mark, comment, member, item);
+			item.addReview(newReview);
+			member.addReview(newReview);
 		}
 		return item.getMean();
 	}
@@ -405,8 +406,9 @@ public class SocialNetwork implements ISocialNetworkPremium {
 			review.setMark(mark);
 			review.setComment(comment);
 		} else {
-			item.addReview(new Review(mark, comment, member, item));
-			member.addReview(new Review(mark, comment, member, item));
+			Review newReview = new Review(mark, comment, member, item);
+			item.addReview(newReview);
+			member.addReview(newReview);
 		}
 		return item.getMean();
 	}

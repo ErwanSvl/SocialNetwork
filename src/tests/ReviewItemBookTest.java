@@ -165,6 +165,10 @@ public class ReviewItemBookTest {
 		nbTests++;
 		nbErrors += reviewItemBookOKTest(sn, "kthezelais", "1234", "Alice's Adventures in Wonderland", 5, "Great Book!",
 				(float) 2.5, "6.5");
+		
+		nbTests++;
+		nbErrors += reviewItemBookOKTest(sn, "kthezelais", "1234", "Alice's Adventures in Wonderland", 0, "Great Book!",
+				(float) 0, "6.6");
 
 		// Test n�x (lot 2)
 		try {
@@ -178,7 +182,7 @@ public class ReviewItemBookTest {
 
 		nbTests++;
 		nbErrors += reviewItemBookOKTest(sn, "kthezelais", "1234", "Alice's Adventures in Wonderland", 5, "Great Book!",
-				(float) 1.43, "6.5"); // mean (2.5 * 0 + 1.0 * 5) / 3.5
+				(float) 1.43, "6.7"); // mean (2.5 * 0 + 1.0 * 5) / 3.5
 
 		nbTests++;
 		if (nbFilms != sn.nbFilms()) {

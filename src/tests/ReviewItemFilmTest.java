@@ -166,6 +166,10 @@ public class ReviewItemFilmTest {
 		nbTests++;
 		nbErrors += reviewItemFilmOKTest(sn, "kthezelais", "1234", "Star Wars: Episode IV – A New Hope", 5,
 				"May the force be with you", (float) 2.5, "9.5");
+		
+		nbTests++;
+		nbErrors += reviewItemFilmOKTest(sn, "kthezelais", "1234", "Star Wars: Episode IV – A New Hope", 0,
+				"May the force be with you", (float) 0, "9.5");
 
 		// Test n�x (lot 2)
 		try {

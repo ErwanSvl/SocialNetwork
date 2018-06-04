@@ -47,7 +47,7 @@ public class SocialNetworkTest {
 			System.out.println(
 					"\n\n **********************************************************************************************\n");
 			//
-			tr = ReviewItemBookTest.test();
+			tr = ReviewItemFilmTest.test();
 			testSuiteReport.add(tr);
 			System.out.println(
 					"\n\n **********************************************************************************************\n");
