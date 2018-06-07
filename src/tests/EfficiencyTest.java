@@ -38,6 +38,7 @@ public class EfficiencyTest {
 		sn.nbMembers();
 		long endTime = System.nanoTime();
 		float nbMilliSec = (endTime - startTime) / 1000000;
+		System.out.println("Time for nbMember : " + nbMilliSec);
 		if (nbMilliSec > 1000) { // Time in millisecond
 			System.out.println("Err : nbMembers take " + nbMilliSec + " milliseconds");
 			nbErrors++;
@@ -49,6 +50,7 @@ public class EfficiencyTest {
 		sn.nbBooks();
 		endTime = System.nanoTime();
 		nbMilliSec = (endTime - startTime) / 1000000;
+		System.out.println("Time for nbBooks : " + nbMilliSec);
 		if (nbMilliSec > 1000) { // Time in millisecond
 			System.out.println("Err : nbBooks take " + nbMilliSec + " milliseconds");
 			nbErrors++;
@@ -59,6 +61,7 @@ public class EfficiencyTest {
 		nbTests++;
 		sn.nbFilms();
 		endTime = System.nanoTime();
+		System.out.println("Time for nbFilms : " + nbMilliSec);
 		nbMilliSec = (endTime - startTime) / 1000000;
 		if (nbMilliSec > 1000) { // Time in millisecond
 			System.out.println("Err : nbFilms take " + nbMilliSec + " milliseconds");
@@ -76,6 +79,7 @@ public class EfficiencyTest {
 		}
 		endTime = System.nanoTime();
 		nbMilliSec = (endTime - startTime) / 1000000;
+		System.out.println("Time for addMember : " + nbMilliSec);
 		if (nbMilliSec > 1000) { // Time in millisecond
 			System.out.println("Err : addMember take " + nbMilliSec + " milliseconds");
 			nbErrors++;
@@ -92,6 +96,7 @@ public class EfficiencyTest {
 		}
 		endTime = System.nanoTime();
 		nbMilliSec = (endTime - startTime) / 1000000;
+		System.out.println("Time for addItemBook: " + nbMilliSec);
 		if (nbMilliSec > 1000) { // Time in millisecond
 			System.out.println("Err : addItemBook take " + nbMilliSec + " milliseconds");
 			nbErrors++;
@@ -108,6 +113,7 @@ public class EfficiencyTest {
 		}
 		endTime = System.nanoTime();
 		nbMilliSec = (endTime - startTime) / 1000000;
+		System.out.println("Time for addItemFilm: " + nbMilliSec);
 		if (nbMilliSec > 1000) { // Time in millisecond
 			System.out.println("Err : addItemFilm take " + nbMilliSec + " milliseconds");
 			nbErrors++;
@@ -124,6 +130,7 @@ public class EfficiencyTest {
 		}
 		endTime = System.nanoTime();
 		nbMilliSec = (endTime - startTime) / 1000000;
+		System.out.println("Time for reviewItemBook: " + nbMilliSec);
 		if (nbMilliSec > 1000) { // Time in millisecond
 			System.out.println("Err : reviewItemBook take " + nbMilliSec + " milliseconds");
 			nbErrors++;
@@ -140,6 +147,7 @@ public class EfficiencyTest {
 		}
 		endTime = System.nanoTime();
 		nbMilliSec = (endTime - startTime) / 1000000;
+		System.out.println("Time for reviewItemFilm: " + nbMilliSec);
 		if (nbMilliSec > 1000) { // Time in millisecond
 			System.out.println("Err : reviewItemFilm take " + nbMilliSec + " milliseconds");
 			nbErrors++;
@@ -156,6 +164,7 @@ public class EfficiencyTest {
 		}
 		endTime = System.nanoTime();
 		nbMilliSec = (endTime - startTime) / 1000000;
+		System.out.println("Time for consultItem: " + nbMilliSec);
 		if (nbMilliSec > 1000) { // Time in millisecond
 			System.out.println("Err : consultItems take " + nbMilliSec + " milliseconds");
 			nbErrors++;
@@ -172,6 +181,7 @@ public class EfficiencyTest {
 		}
 		endTime = System.nanoTime();
 		nbMilliSec = (endTime - startTime) / 1000000;
+		System.out.println("Time for reviewOpinion: " + nbMilliSec);
 		if (nbMilliSec > 1000) { // Time in millisecond
 			System.out.println("Err : reviewOpinion take " + nbMilliSec + " milliseconds");
 			nbErrors++;

@@ -152,40 +152,40 @@ public class reviewOpinionTest {
 				"reviewOpinion() doesn't reject logins that don't contain at least one character other than space");
 
 		nbTests++;
-		nbErrors += reviewOpinionBadEntryTest(sn, "esevellec", "1234", null, "Dune", Itemtype.BOOK, 5, "x.2",
+		nbErrors += reviewOpinionBadEntryTest(sn, "esevellec", "1234", null, "Dune", Itemtype.BOOK, 5, "x.3",
 				"reviewOpinion() doesn't reject null logins for the review author");
 
 		nbTests++;
-		nbErrors += reviewOpinionBadEntryTest(sn, "esevellec", "1234", "     ", "Dune", Itemtype.BOOK, 5, "x.2",
+		nbErrors += reviewOpinionBadEntryTest(sn, "esevellec", "1234", "     ", "Dune", Itemtype.BOOK, 5, "x.4",
 				"reviewOpinion() doesn't reject logins that don't contain at least one character other than space for the review author");
 
 		nbTests++;
-		nbErrors += reviewOpinionBadEntryTest(sn, "esevellec", null, "kthezelais", "Dune", Itemtype.BOOK, 5, "x.3",
+		nbErrors += reviewOpinionBadEntryTest(sn, "esevellec", null, "kthezelais", "Dune", Itemtype.BOOK, 5, "x.5",
 				"reviewOpinion() doesn't reject null passwords");
 
 		nbTests++;
 		nbErrors += reviewOpinionBadEntryTest(sn, "esevellec", "    234   ", "kthezelais", "Dune", Itemtype.BOOK, 5,
-				"x.4",
+				"x.6",
 				"reviewOpinion() doesn't reject passwords that don't contain at least 4 characters (not taking into account leading or trailing blanks)");
 
 		nbTests++;
-		nbErrors += reviewOpinionBadEntryTest(sn, "esevellec", "1234", "kthezelais", null, Itemtype.BOOK, 5, "x.5",
+		nbErrors += reviewOpinionBadEntryTest(sn, "esevellec", "1234", "kthezelais", null, Itemtype.BOOK, 5, "x.7",
 				"reviewOpinion() doesn't reject null titles");
 
 		nbTests++;
-		nbErrors += reviewOpinionBadEntryTest(sn, "esevellec", "1234", "kthezelais", "    ", Itemtype.BOOK, 5, "x.6",
+		nbErrors += reviewOpinionBadEntryTest(sn, "esevellec", "1234", "kthezelais", "    ", Itemtype.BOOK, 5, "x.8",
 				"reviewOpinion() doesn't reject only space titles");
 
 		nbTests++;
-		nbErrors += reviewOpinionBadEntryTest(sn, "esevellec", "1234", "kthezelais", "Dune", null, 5, "x.7",
+		nbErrors += reviewOpinionBadEntryTest(sn, "esevellec", "1234", "kthezelais", "Dune", null, 5, "x.9",
 				"reviewOpinion() doesn't reject null itemtypes");
 
 		nbTests++;
-		nbErrors += reviewOpinionBadEntryTest(sn, "esevellec", "1234", "kthezelais", "Dune", Itemtype.BOOK, -1, "x.8",
+		nbErrors += reviewOpinionBadEntryTest(sn, "esevellec", "1234", "kthezelais", "Dune", Itemtype.BOOK, -1, "x.10",
 				"reviewOpinion() doesn't reject lower than 0 marks");
 
 		nbTests++;
-		nbErrors += reviewOpinionBadEntryTest(sn, "esevellec", "1234", "kthezelais", "Dune", Itemtype.BOOK, 6, "x.9",
+		nbErrors += reviewOpinionBadEntryTest(sn, "esevellec", "1234", "kthezelais", "Dune", Itemtype.BOOK, 6, "x.11",
 				"reviewOpinion() doesn't reject greater than 5 marks");
 
 		// Test n°y
